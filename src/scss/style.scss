@@ -1,3 +1,114 @@
-body {
-  background: limegreen;
+* {
+  box-sizing: border-box;
+}
+.gameBoard {
+  background-color: brown;
+  height: 600px;
+  width: 600px;
+  margin: 50px auto;
+  position: relative;
+  .node{
+    border: 1px solid black;
+    height: 25px;
+    width: 25px;
+    margin: 2.5px;
+    position: absolute;
+    &#n1 {
+    }
+    &#n2 {
+      left: 287.5px;
+    }
+    &#n3 {
+      right: 2.5px;
+    }
+    &#n4 {
+      top: 287.5px;
+    }
+    &#n5 {
+      right: 2.5px;
+      top: 287.5px;
+    }
+    &#n6 {
+      bottom: 2.5px
+    }
+    &#n7 {
+      bottom: 2.5px;
+      left: 287.5px;
+    }
+    &#n8 {
+      bottom: 2.5px;
+      right: 2.5px;
+    }
+    &#n9 {
+      top: 88.5px;
+      left: 88.5px;
+    }
+    &#n10 {
+      top: 88.5px;
+      left: 287.5px;
+    }
+    &#n11 {
+      top: 88.5px;
+      right: 88.5px;
+    }
+    &#n12 {
+      top: 287.5px;
+      left: 88.5px;
+    }
+    &#n13 {
+      top: 287.5px;
+      right: 88.5px;
+    }
+    &#n14 {
+      left: 88.5px;
+      bottom: 88.5px;
+    }
+    &#n15 {
+      left: 287.5px;
+      bottom: 88.5px;
+    }
+    &#n16 {
+      right: 88.5px;
+      bottom: 88.5px;
+    }
+    &#n17 {
+      top: 188.5px;
+      left: 188.5px;
+    }
+    &#n18 {
+      top: 188.5px;
+      left: 288.5px;
+    }
+    &#n19 {
+      top: 188.5px;
+      right: 188.5px;
+    }
+    &#n20 {
+      top: 288.5px;
+      left: 188.5px;
+    }
+    &#n21 {
+      top: 288.5px;
+      right: 188.5px;
+    }
+    &#n22 {
+      left: 188.5px;
+      bottom: 188.5px;
+    }
+    &#n23 {
+      right: 288.5px;
+      bottom: 188.5px;
+    }
+    &#n24 {
+      right: 188.5px;
+      bottom: 188.5px;
+    }
+  }
+}
+
+.purple {
+  background-color: purple;
+}
+.green {
+  background-color: green;
 }
