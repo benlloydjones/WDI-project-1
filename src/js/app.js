@@ -252,19 +252,16 @@ function checkMill(e) {
   }
 }
 
-
-//this function will change a node to a counter depending on whose turn it is
+//this function will place a counter on a node without a counter on it.
 function applyCounter(e) {
   if($(e.target).hasClass('purple') || $(e.target).hasClass('green')) {
     console.log('already contains counter');
   } else {
     if(turnCounter % 2 === 0) {
       $(e.target).addClass('purple');
-      turnCounter++;
       console.log('purple click', `, turn: ${turnCounter}`);
     } else {
       $(e.target).addClass('green');
-      turnCounter++;
       console.log('green click', `, turn: ${turnCounter}`);
     }
   }
@@ -276,6 +273,7 @@ function nodeClicked(e) {
   } else {
     applyCounter(e);
     checkMill(e);
+    turnCounter++;
     console.log( `mill: ${millCreated}`);
   }
 }
