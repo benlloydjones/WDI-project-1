@@ -25,6 +25,10 @@ const $node21 = $('#n21');
 const $node22 = $('#n22');
 const $node23 = $('#n23');
 const $node24 = $('#n24');
+const $turnDisplay = $('.turnNumber');
+const $playerDisplay = $('.currentPlayer');
+const $button = $('button');
+const $winner = $('winner');
 
 let turnCounter = 1;
 let millCreated = false;
@@ -38,177 +42,89 @@ let nodeFrom = null;
 
 //this function checks if the node you've clicked on is in a mill and is used for both removing and adding counters
 function checkMill(e) {
-  if($(e.target)[0] === $node1[0]) {//click on node1 check horizontal then vertical
-    console.log($node1);
-    if($(e.target).attr('class') === $node2.attr('class') && $(e.target).attr('class') === $node3.attr('class')) {
-      return true;
-    } else if ($(e.target).attr('class') === $node4.attr('class') && $(e.target).attr('class') === $node6.attr('class')) {
+  //we control the horizontal
+  if([$node1[0], $node2[0], $node3[0]].includes($(e.target)[0])) {
+    if([$node1, $node2, $node3].every((node) => node.attr('class') === $(e.target).attr('class'))) {
       return true;
     }
-  } else if($(e.target)[0] === $node2[0]) {//click on node2 check horizontal then vertical
-    console.log('node2');
-    if($(e.target).attr('class') === $node1.attr('class') && $(e.target).attr('class') === $node3.attr('class')) {
-      return true;
-    } else if($(e.target).attr('class') === $node10.attr('class') && $(e.target).attr('class') === $node18.attr('class')) {
-      return true;
-    }
-  } else if($(e.target)[0] === $node3[0]) {//click on node3 check horizontal then vertical
-    console.log('node3');
-    if($(e.target).attr('class') === $node1.attr('class') && $(e.target).attr('class') === $node2.attr('class')) {
-      return true;
-    } else if($(e.target).attr('class') === $node5.attr('class') && $(e.target).attr('class') === $node8.attr('class')) {
-      return true;
-    }
-  } else if ($(e.target)[0] === $node4[0]) {//click on node4 check horizontal then vertical
-    console.log('node4');
-    if($(e.target).attr('class') === $node12.attr('class') && $(e.target).attr('class') === $node20.attr('class')) {
-      return true;
-    } else if($(e.target).attr('class') === $node1.attr('class') && $(e.target).attr('class') === $node6.attr('class')) {
-      return true;
-    }
-  } else if($(e.target)[0] === $node5[0]) {//click on node5 check horizontal then vertical
-    console.log('node5');
-    if($(e.target).attr('class') === $node21.attr('class') && $(e.target).attr('class') === $node13.attr('class')) {
-      return true;
-    } else if($(e.target).attr('class') === $node3.attr('class') && $(e.target).attr('class') === $node8.attr('class')) {
-      return true;
-    }
-  } else if ($(e.target)[0] === $node6[0]) {//click on node6 check horizontal then vertical
-    console.log('node6');
-    if($(e.target).attr('class') === $node7.attr('class') && $(e.target).attr('class') === $node8.attr('class')) {
-      return true;
-    } else if($(e.target).attr('class') === $node1.attr('class') && $(e.target).attr('class') === $node4.attr('class')) {
-      return true;
-    }
-  } else if($(e.target)[0] === $node7[0]) {//click on node7 check horizontal then vertical
-    console.log('node7');
-    if($(e.target).attr('class') === $node6.attr('class') && $(e.target).attr('class') === $node8.attr('class')) {
-      return true;
-    } else if($(e.target).attr('class') === $node23.attr('class') && $(e.target).attr('class') === $node15.attr('class')) {
-      return true;
-    }
-  } else if($(e.target)[0] === $node8[0]) {//click on node8 check horizontal then vertical
-    console.log('node8');
-    if($(e.target).attr('class') === $node6.attr('class') && $(e.target).attr('class') === $node7.attr('class')) {
-      return true;
-    } else if($(e.target).attr('class') === $node3.attr('class') && $(e.target).attr('class') === $node5.attr('class')) {
-      return true;
-    }
-  } else if($(e.target)[0] === $node9[0]) {//click on node9 check horizontal then vertical
-    console.log('node9');
-    if($(e.target).attr('class') === $node10.attr('class') && $(e.target).attr('class') === $node11.attr('class')) {
-      return true;
-    } else if($(e.target).attr('class') === $node12.attr('class') && $(e.target).attr('class') === $node14.attr('class')) {
-      return true;
-    }
-  } else if($(e.target)[0] === $node10[0]) {//click on node10 check horizontal then vertical
-    console.log('node10');
-    if($(e.target).attr('class') === $node9.attr('class') && $(e.target).attr('class') === $node11.attr('class')) {
-      return true;
-    } else if($(e.target).attr('class') === $node2.attr('class') && $(e.target).attr('class') === $node18.attr('class')) {
-      return true;
-    }
-  } else if($(e.target)[0] === $node11[0]) {//click on node11 check horizontal then vertical
-    console.log('node11');
-    if($(e.target).attr('class') === $node9.attr('class') && $(e.target).attr('class') === $node10.attr('class')) {
-      return true;
-    } else if($(e.target).attr('class') === $node13.attr('class') && $(e.target).attr('class') === $node16.attr('class')) {
-      return true;
-    }
-  } else if($(e.target)[0] === $node12[0]) {//click on node12 check horizontal then vertical
-    console.log('node12');
-    if($(e.target).attr('class') === $node4.attr('class') && $(e.target).attr('class') === $node20.attr('class')) {
-      return true;
-    } else if($(e.target).attr('class') === $node9.attr('class') && $(e.target).attr('class') === $node14.attr('class')) {
-      return true;
-    }
-  } else if($(e.target)[0] === $node13[0]) {//click on node13 check horizontal then vertical
-    console.log('node13');
-    if($(e.target).attr('class') === $node21.attr('class') && $(e.target).attr('class') === $node5.attr('class')) {
-      return true;
-    } else if($(e.target).attr('class') === $node11.attr('class') && $(e.target).attr('class') === $node16.attr('class')) {
-      return true;
-    }
-  } else if($(e.target)[0] === $node14[0]) {//click on node14 check horizontal then vertical
-    console.log('node14');
-    if($(e.target).attr('class') === $node15.attr('class') && $(e.target).attr('class') === $node16.attr('class')) {
-      return true;
-    } else if($(e.target).attr('class') === $node9.attr('class') && $(e.target).attr('class') === $node12.attr('class')) {
-      return true;
-    }
-  } else if($(e.target)[0] === $node15[0]) {//click on node15 check horizontal then vertical
-    console.log('node15');
-    if($(e.target).attr('class') === $node14.attr('class') && $(e.target).attr('class') === $node16.attr('class')) {
-      return true;
-    } else if($(e.target).attr('class') === $node23.attr('class') && $(e.target).attr('class') === $node7.attr('class')) {
-      return true;
-    }
-  } else if($(e.target)[0] === $node16[0]) {//click on node16 check horizontal then vertical
-    console.log('node16');
-    if($(e.target).attr('class') === $node14.attr('class') && $(e.target).attr('class') === $node15.attr('class')) {
-      return true;
-    } else if($(e.target).attr('class') === $node11.attr('class') && $(e.target).attr('class') === $node13.attr('class')) {
-      return true;
-    }
-  } else if($(e.target)[0] === $node17[0]) {//click on node17 check horizontal then vertical
-    console.log('node17');
-    if($(e.target).attr('class') === $node18.attr('class') && $(e.target).attr('class') === $node19.attr('class')) {
-      return true;
-    } else if($(e.target).attr('class') === $node20.attr('class') && $(e.target).attr('class') === $node22.attr('class')) {
-      return true;
-    }
-  } else if($(e.target)[0] === $node18[0]) {//click on node18 check horizontal then vertical
-    console.log('node18');
-    if($(e.target).attr('class') === $node17.attr('class') && $(e.target).attr('class') === $node19.attr('class')) {
-      return true;
-    } else if($(e.target).attr('class') === $node2.attr('class') && $(e.target).attr('class') === $node10.attr('class')) {
-      return true;
-    }
-  } else if($(e.target)[0] === $node19[0]) {//click on node19 check horizontal then vertical
-    console.log('node19');
-    if($(e.target).attr('class') === $node17.attr('class') && $(e.target).attr('class') === $node18.attr('class')) {
-      return true;
-    } else if($(e.target).attr('class') === $node21.attr('class') && $(e.target).attr('class') === $node24.attr('class')) {
-      return true;
-    }
-  } else if($(e.target)[0] === $node20[0]) {//click on node20 check horizontal then vertical
-    console.log('node20');
-    if($(e.target).attr('class') === $node4.attr('class') && $(e.target).attr('class') === $node12.attr('class')) {
-      return true;
-    } else if($(e.target).attr('class') === $node17.attr('class') && $(e.target).attr('class') === $node22.attr('class')) {
-      return true;
-    }
-  } else if($(e.target)[0] === $node21[0]) {//click on node21 check horizontal then vertical
-    console.log('node21');
-    if($(e.target).attr('class') === $node13.attr('class') && $(e.target).attr('class') === $node5.attr('class')) {
-      return true;
-    } else if($(e.target).attr('class') === $node19.attr('class') && $(e.target).attr('class') === $node24.attr('class')) {
-      return true;
-    }
-  } else if($(e.target)[0] === $node22[0]) {//click on node22 check horizontal then vertical
-    console.log('node22');
-    if($(e.target).attr('class') === $node23.attr('class') && $(e.target).attr('class') === $node24.attr('class')) {
-      return true;
-    } else if($(e.target).attr('class') === $node17.attr('class') && $(e.target).attr('class') === $node20.attr('class')) {
-      return true;
-    }
-  } else if($(e.target)[0] === $node23[0]) {//click on node23 check horizontal then vertical
-    console.log('node23');
-    if($(e.target).attr('class') === $node22.attr('class') && $(e.target).attr('class') === $node24.attr('class')) {
-      return true;
-    } else if($(e.target).attr('class') === $node15.attr('class') && $(e.target).attr('class') === $node7.attr('class')) {
-      return true;
-    }
-  } else if($(e.target)[0] === $node24[0]) {//click on node24 check horizontal then vertical
-    console.log('node24');
-    if($(e.target).attr('class') === $node22.attr('class') && $(e.target).attr('class') === $node23.attr('class')) {
-      return true;
-    } else if($(e.target).attr('class') === $node19.attr('class') && $(e.target).attr('class') === $node21.attr('class')) {
-      return true;
-    }
-  } else {
-    return false;
   }
+  if([$node9[0], $node10[0], $node11[0]].includes($(e.target)[0])) {
+    if([$node9, $node10, $node11].every((node) => node.attr('class') === $(e.target).attr('class'))) {
+      return true;
+    }
+  }
+  if([$node17[0], $node18[0], $node19[0]].includes($(e.target)[0])) {
+    if([$node17, $node18, $node19].every((node) => node.attr('class') === $(e.target).attr('class'))) {
+      return true;
+    }
+  }
+  if([$node4[0], $node12[0], $node20[0]].includes($(e.target)[0])) {
+    if([$node4, $node12, $node20].every((node) => node.attr('class') === $(e.target).attr('class'))) {
+      return true;
+    }
+  }
+  if([$node21[0], $node13[0], $node5[0]].includes($(e.target)[0])) {
+    if([$node21, $node13, $node5].every((node) => node.attr('class') === $(e.target).attr('class'))) {
+      return true;
+    }
+  }
+  if([$node22[0], $node23[0], $node24[0]].includes($(e.target)[0])) {
+    if([$node22, $node23, $node24].every((node) => node.attr('class') === $(e.target).attr('class'))) {
+      return true;
+    }
+  }
+  if([$node14[0], $node15[0], $node16[0]].includes($(e.target)[0])) {
+    if([$node14, $node15, $node16].every((node) => node.attr('class') === $(e.target).attr('class'))) {
+      return true;
+    }
+  }
+  if([$node6[0], $node7[0], $node8[0]].includes($(e.target)[0])) {
+    if([$node6, $node7, $node8].every((node) => node.attr('class') === $(e.target).attr('class'))) {
+      return true;
+    }
+  }
+  //we control the vertical
+  if([$node1[0], $node4[0], $node6[0]].includes($(e.target)[0])) {
+    if([$node1, $node4, $node6].every((node) => node.attr('class') === $(e.target).attr('class'))) {
+      return true;
+    }
+  }
+  if([$node9[0], $node12[0], $node14[0]].includes($(e.target)[0])) {
+    if([$node9, $node12, $node14].every((node) => node.attr('class') === $(e.target).attr('class'))) {
+      return true;
+    }
+  }
+  if([$node17[0], $node20[0], $node22[0]].includes($(e.target)[0])) {
+    if([$node17, $node20, $node22].every((node) => node.attr('class') === $(e.target).attr('class'))) {
+      return true;
+    }
+  }
+  if([$node2[0], $node10[0], $node18[0]].includes($(e.target)[0])) {
+    if([$node2, $node10, $node18].every((node) => node.attr('class') === $(e.target).attr('class'))) {
+      return true;
+    }
+  }
+  if([$node23[0], $node15[0], $node7[0]].includes($(e.target)[0])) {
+    if([$node23, $node15, $node7].every((node) => node.attr('class') === $(e.target).attr('class'))) {
+      return true;
+    }
+  }
+  if([$node19[0], $node21[0], $node24[0]].includes($(e.target)[0])) {
+    if([$node19, $node21, $node24].every((node) => node.attr('class') === $(e.target).attr('class'))) {
+      return true;
+    }
+  }
+  if([$node11[0], $node13[0], $node16[0]].includes($(e.taret)[0])) {
+    if([$node11, $node13, $node16].every((node) => node.attr('class') === $(e.target).attr('class'))) {
+      return true;
+    }
+  }
+  if([$node3[0], $node5[0], $node8[0]].includes($(e.target)[0])) {
+    if([$node3, $node5, $node8].every((node) => node.attr('class') === $(e.target).attr('class'))) {
+      return true;
+    }
+  }
+  return false;
 }
 
 //this function will place a counter on a node without a counter on it.
@@ -219,18 +135,16 @@ function applyCounter(e) {
     if(turnCounter % 2 === 0) {
       $(e.target).addClass('purple');
       console.log('purple click', `, turn: ${turnCounter}`);
-      turnCounter++;
     } else {
       $(e.target).addClass('green');
       console.log('green click', `, turn: ${turnCounter}`);
-      turnCounter++;
     }
   }
 }
 
 //this function will remove a counter if that counter is not in a mill and increase the score of the player removing a counter
 function removeCounter(e) {
-  if(!checkMill(e)) {
+  if(!checkMill(e) && ($(e.target).hasClass('green') || $(e.target).hasClass('purple'))) {
     if($(e.target).hasClass('purple')) {
       $(e.target).removeClass('purple');
       greenPlayer ++;
@@ -242,24 +156,29 @@ function removeCounter(e) {
       millCreated = false;
       console.log(`Green: ${greenPlayer}, Purple: ${purplePlayer}`);
     }
-  } else {
+  } else if(checkMill(e)){
     console.log('this is in a mill');
+  } else {
+    console.log('That node does not contain a counter!');
   }
 }
 
-//function to pick up counter and track where it was picked up from
+//function to pick up counter
 function pickUpCounter(e) {
   if($(e.target).hasClass('purple')) {
     $(e.target).removeClass('purple');
-    nodeFrom = $(e.target)[0];
     counterInHand = 'purple';
-    movingCounter = true;
   } else if($(e.target).hasClass('green')) {
     $(e.target).removeClass('green');
-    nodeFrom = $(e.target)[0];
     counterInHand = 'green';
-    movingCounter = true;
   }
+  trackCounter(e);
+}
+
+//tracks where a counter was picked up from
+function trackCounter(e) {
+  nodeFrom = $(e.target)[0];
+  movingCounter = true;
 }
 
 //function to place counter only if in a valid square when being moved
@@ -274,151 +193,56 @@ function placeCounter(e) {
   }
 }
 
+//checks when moving a token if it's a legitimate move
 function fairMove(e) {
   if(nodeFrom === $node1[0]) {
-    if($(e.target)[0] === $node2[0] || $(e.target)[0] === $node4[0]) {
-      return true;
-    } else {
-      return false;
-    }
+    return [$node2[0], $node4[0]].some((node) => node === $(e.target)[0]);
   } else if(nodeFrom === $node2[0]) {
-    if($(e.target)[0] === $node1[0] || $(e.target)[0] === $node10[0] || $(e.target)[0] === $node3[0]) {
-      return true;
-    } else {
-      return false;
-    }
+    return [$node1[0], $node10[0] ,$node3[0]].some((node) => node === $(e.target)[0]);
   } else if(nodeFrom === $node3[0]) {
-    if($(e.target)[0] === $node2[0] || $(e.target)[0] === $node5[0]) {
-      return true;
-    } else {
-      return false;
-    }
+    return [$node2[0], $node5[0]].some((node) => node === $(e.target)[0]);
   } else if(nodeFrom === $node4[0]) {
-    if($(e.target)[0] === $node1[0] || $(e.target)[0] === $node12[0] || $(e.target)[0] === $node6[0]) {
-      return true;
-    } else {
-      return false;
-    }
+    return [$node1[0], $node12[0], $node6[0]].some((node) => node === $(e.target)[0]);
   } else if(nodeFrom === $node5[0]) {
-    if($(e.target)[0] === $node3[0] || $(e.target)[0] === $node8[0] || $(e.target)[0] === $node13[0]) {
-      return true;
-    } else {
-      return false;
-    }
+    return [$node3[0], $node8[0], $node13[0]].some((node) => node === $(e.target)[0]);
   } else if(nodeFrom === $node6[0]) {
-    if($(e.target)[0] === $node4[0] || $(e.target)[0] === $node7[0]) {
-      return true;
-    } else {
-      return false;
-    }
+    return [$node4[0], $node7[0]].some((node) => node === $(e.target)[0]);
   } else if(nodeFrom === $node7[0]) {
-    if($(e.target)[0] === $node15[0] || $(e.target)[0] === $node8[0] || $(e.target)[0] === $node6[0]) {
-      return true;
-    } else {
-      return false;
-    }
+    return [$node15[0], $node8[0], $node6[0]].some((node) => node === $(e.target)[0]);
   } else if(nodeFrom === $node8[0]) {
-    if($(e.target)[0] === $node5[0] || $(e.target)[0] === $node7[0]) {
-      return true;
-    } else {
-      return false;
-    }
+    return [$node5[0], $node7[0]].some((node) => node === $(e.target)[0]);
   } else if(nodeFrom === $node9[0]) {
-    if($(e.target)[0] === $node10[0] || $(e.target)[0] === $node12[0]) {
-      return true;
-    } else {
-      return false;
-    }
+    return [$node10[0], $node12[0]].some((node) => node === $(e.target)[0]);
   } else if(nodeFrom === $node10[0]) {
-    if($(e.target)[0] === $node2[0] || $(e.target)[0] === $node11[0] || $(e.target)[0] === $node18[0] || $(e.target)[0] === $node9[0]) {
-      return true;
-    } else {
-      return false;
-    }
+    return [$node2[0], $node11[0], $node18[0], $node9[0]].some((node) => node === $(e.target)[0]);
   } else if(nodeFrom === $node11[0]) {
-    if($(e.target)[0] === $node13[0] || $(e.target)[0] === $node10[0]) {
-      return true;
-    } else {
-      return false;
-    }
+    return [$node13[0], $node10[0]].some((node) => node === $(e.target)[0]);
   } else if(nodeFrom === $node12[0]) {
-    if($(e.target)[0] === $node9[0] || $(e.target)[0] === $node20[0] || $(e.target)[0] === $node14[0] || $(e.target)[0] === $node4[0]) {
-      return true;
-    } else {
-      return false;
-    }
+    return [$node9[0], $node20[0], $node14[0], $node4[0]].some((node) => node === $(e.target)[0]);
   } else if(nodeFrom === $node13[0]) {
-    if($(e.target)[0] === $node11[0] || $(e.target)[0] === $node5[0] || $(e.target)[0] === $node16[0] || $(e.target)[0] === $node21[0]) {
-      return true;
-    } else {
-      return false;
-    }
+    return [$node11[0], $node5[0], $node16[0], $node21[0]].some((node) => node === $(e.target)[0]);
   } else if(nodeFrom === $node14[0]) {
-    if($(e.target)[0] === $node12[0] || $(e.target)[0] === $node15[0]) {
-      return true;
-    } else {
-      return false;
-    }
+    return [$node12[0], $node15[0]].some((node) => node === $(e.target)[0]);
   } else if(nodeFrom === $node15[0]) {
-    if($(e.target)[0] === $node23[0] || $(e.target)[0] === $node16[0] || $(e.target)[0] === $node7[0] || $(e.target)[0] === $node14[0]) {
-      return true;
-    } else {
-      return false;
-    }
+    return [$node23[0], $node16[0], $node7[0], $node14[0]].some((node) => node === $(e.target)[0]);
   } else if(nodeFrom === $node16[0]) {
-    if($(e.target)[0] === $node13[0] || $(e.target)[0] === $node15[0]) {
-      return true;
-    } else {
-      return false;
-    }
+    return [$node13[0], $node15[0]].some((node) => node === $(e.target)[0]);
   } else if(nodeFrom === $node17[0]) {
-    if($(e.target)[0] === $node18[0] || $(e.target)[0] === $node20[0]) {
-      return true;
-    } else {
-      return false;
-    }
+    return [$node18[0], $node20[0]].some((node) => node === $(e.target)[0]);
   } else if(nodeFrom === $node18[0]) {
-    if($(e.target)[0] === $node10[0] || $(e.target)[0] === $node19[0] || $(e.target)[0] === $node17[0]) {
-      return true;
-    } else {
-      return false;
-    }
+    return [$node10[0], $node19[0], $node17[0]].some((node) => node === $(e.target)[0]);
   } else if(nodeFrom === $node19[0]) {
-    if($(e.target)[0] === $node21[0] || $(e.target)[0] === $node18[0]) {
-      return true;
-    } else {
-      return false;
-    }
+    return [$node21[0], $node18[0]].some((node) => node === $(e.target)[0]);
   } else if(nodeFrom === $node20[0]) {
-    if($(e.target)[0] === $node17[0] || $(e.target)[0] === $node22[0] || $(e.target)[0] === $node12[0]) {
-      return true;
-    } else {
-      return false;
-    }
+    return [$node17[0], $node22[0], $node12[0]].some((node) => node === $(e.target)[0]);
   } else if(nodeFrom === $node21[0]) {
-    if($(e.target)[0] === $node19[0] || $(e.target)[0] === $node13[0] || $(e.target)[0] === $node24[0]) {
-      return true;
-    } else {
-      return false;
-    }
+    return [$node19[0], $node13[0], $node24[0]].some((node) => node === $(e.target)[0]);
   } else if(nodeFrom === $node22[0]) {
-    if($(e.target)[0] === $node20[0] || $(e.target)[0] === $node23[0]) {
-      return true;
-    } else {
-      return false;
-    }
+    return [$node20[0], $node23[0]].some((node) => node === $(e.target)[0]);
   } else if(nodeFrom === $node23[0]) {
-    if($(e.target)[0] === $node24[0] || $(e.target)[0] === $node15[0] || $(e.target)[0] === $node22[0]) {
-      return true;
-    } else {
-      return false;
-    }
+    return [$node24[0], $node15[0], $node22[0]].some((node) => node === $(e.target)[0]);
   } else if(nodeFrom === $node24[0]) {
-    if($(e.target)[0] === $node23[0] || $(e.target)[0] === $node21[0]) {
-      return true;
-    } else {
-      return false;
-    }
+    return [$node23[0], $node21[0]].some((node) => node === $(e.target)[0]);
   }
 }
 
@@ -429,10 +253,25 @@ function fairMove(e) {
 function nodeClicked(e) {
   if(millCreated) {
     removeCounter(e);
+    if(!millCreated) {
+      turnCounter++;
+    }
+    if(turnCounter % 2 === 0) {
+      $playerDisplay.text('Purple');
+    } else {
+      $playerDisplay.text('Green');
+    }
   } else if(turnCounter <= 18) {
     applyCounter(e);
     millCreated = checkMill(e);
-    if(millCreated) {
+    if(!millCreated) {
+      turnCounter++;
+      if(turnCounter % 2 === 0) {
+        $playerDisplay.text('Purple');
+      } else {
+        $playerDisplay.text('Green');
+      }
+    } else {
       console.log('mill created');
     }
   } else if(!movingCounter) {
@@ -440,8 +279,39 @@ function nodeClicked(e) {
   } else {
     placeCounter(e);
     millCreated = checkMill(e);
+    if(!millCreated) {
+      turnCounter++;
+      if(turnCounter % 2 === 0) {
+        $playerDisplay.text('Purple');
+      } else {
+        $playerDisplay.text('Green');
+      }
+    }
   }
+  if(purplePlayer === 9) {
+    $winner.text('Purple wins!');
+  } else if(greenPlayer === 9) {
+    $winner.text('Green wins!');
+  }
+  $turnDisplay.text(turnCounter);
+
+}
+
+//reset the game to start state
+function reset() {
+  turnCounter = 1;
+  millCreated = false;
+  purplePlayer = 0;
+  greenPlayer = 0;
+  movingCounter = false;
+  counterInHand = null;
+  nodeFrom = null;
+  $nodes.removeClass('green');
+  $nodes.removeClass('purple');
+  $playerDisplay.text('Green');
+  $turnDisplay.text(turnCounter);
 }
 
 //event listerners go here
 $nodes.on('click', nodeClicked);
+$button.on('click', reset);
