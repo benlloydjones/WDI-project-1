@@ -1,114 +1,175 @@
 * {
   box-sizing: border-box;
 }
-.gameBoard {
-  background-color: brown;
-  height: 600px;
-  width: 600px;
-  margin: 50px auto;
-  position: relative;
-  .node{
-    border: 1px solid black;
-    height: 25px;
-    width: 25px;
-    margin: 2.5px;
-    position: absolute;
-    &#n1 {
+body {
+  bckground-colur: lightgrey;
+  .gameBoard {
+    background-color: bisque;
+    border: 1px solid brown;
+    height: 600px;
+    width: 600px;
+    margin: 50px auto;
+    position: relative;
+    .box1 {
+      border: 4px solid black;
+      position: absolute;
+      top: 11px;
+      left: 11px;
+      height: 573px;
+      width: 573px;
     }
-    &#n2 {
-      left: 287.5px;
+    .box2 {
+      border: 4px solid black;
+      position: absolute;
+      top: 100px;
+      left: 100px;
+      height: 395px;
+      width: 395px;
     }
-    &#n3 {
-      right: 2.5px;
+    .box3 {
+      border: 4px solid black;
+      position: absolute;
+      top: 200px;
+      left: 200px;
+      height: 196px;
+      width: 196px;
     }
-    &#n4 {
-      top: 287.5px;
+    .topVert {
+      border: 2px solid black;
+      position: absolute;
+      top: 11px;
+      left: 300px;
+      height: 195px;
+      width: 4px;
     }
-    &#n5 {
-      right: 2.5px;
-      top: 287.5px;
+    .bottomVert {
+      border: 2px solid black;
+      position: absolute;
+      bottom: 11px;
+      left: 300px;
+      height: 195px;
+      width: 4px;
     }
-    &#n6 {
-      bottom: 2.5px
+    .leftHoriz {
+      border: 2px solid black;
+      position: absolute;
+      top: 300px;
+      left: 11px;
+      height: 4px;
+      width: 195px;
     }
-    &#n7 {
-      bottom: 2.5px;
-      left: 287.5px;
+    .rightHoriz {
+      border: 2px solid black;
+      position: absolute;
+      top: 300px;
+      right: 11px;
+      height: 4px;
+      width: 195px;
     }
-    &#n8 {
-      bottom: 2.5px;
-      right: 2.5px;
-    }
-    &#n9 {
-      top: 88.5px;
-      left: 88.5px;
-    }
-    &#n10 {
-      top: 88.5px;
-      left: 287.5px;
-    }
-    &#n11 {
-      top: 88.5px;
-      right: 88.5px;
-    }
-    &#n12 {
-      top: 287.5px;
-      left: 88.5px;
-    }
-    &#n13 {
-      top: 287.5px;
-      right: 88.5px;
-    }
-    &#n14 {
-      left: 88.5px;
-      bottom: 88.5px;
-    }
-    &#n15 {
-      left: 287.5px;
-      bottom: 88.5px;
-    }
-    &#n16 {
-      right: 88.5px;
-      bottom: 88.5px;
-    }
-    &#n17 {
-      top: 188.5px;
-      left: 188.5px;
-    }
-    &#n18 {
-      top: 188.5px;
-      left: 288.5px;
-    }
-    &#n19 {
-      top: 188.5px;
-      right: 188.5px;
-    }
-    &#n20 {
-      top: 288.5px;
-      left: 188.5px;
-    }
-    &#n21 {
-      top: 288.5px;
-      right: 188.5px;
-    }
-    &#n22 {
-      left: 188.5px;
-      bottom: 188.5px;
-    }
-    &#n23 {
-      right: 288.5px;
-      bottom: 188.5px;
-    }
-    &#n24 {
-      right: 188.5px;
-      bottom: 188.5px;
+    .node{
+      background-color: white;
+      border: 1px solid black;
+      border-radius: 100%;
+      height: 25px;
+      width: 25px;
+      margin: 2.5px;
+      position: absolute;
+      &#n1 {
+      }
+      &#n2 {
+        left: 287.5px;
+      }
+      &#n3 {
+        right: 2.5px;
+      }
+      &#n4 {
+        top: 287.5px;
+      }
+      &#n5 {
+        right: 2.5px;
+        top: 287.5px;
+      }
+      &#n6 {
+        bottom: 2.5px
+      }
+      &#n7 {
+        bottom: 2.5px;
+        left: 287.5px;
+      }
+      &#n8 {
+        bottom: 2.5px;
+        right: 2.5px;
+      }
+      &#n9 {
+        top: 88.5px;
+        left: 88.5px;
+      }
+      &#n10 {
+        top: 88.5px;
+        left: 287.5px;
+      }
+      &#n11 {
+        top: 88.5px;
+        right: 88.5px;
+      }
+      &#n12 {
+        top: 287.5px;
+        left: 88.5px;
+      }
+      &#n13 {
+        top: 287.5px;
+        right: 88.5px;
+      }
+      &#n14 {
+        left: 88.5px;
+        bottom: 88.5px;
+      }
+      &#n15 {
+        left: 287.5px;
+        bottom: 88.5px;
+      }
+      &#n16 {
+        right: 88.5px;
+        bottom: 88.5px;
+      }
+      &#n17 {
+        top: 188.5px;
+        left: 188.5px;
+      }
+      &#n18 {
+        top: 188.5px;
+        left: 288.5px;
+      }
+      &#n19 {
+        top: 188.5px;
+        right: 188.5px;
+      }
+      &#n20 {
+        top: 288.5px;
+        left: 188.5px;
+      }
+      &#n21 {
+        top: 288.5px;
+        right: 188.5px;
+      }
+      &#n22 {
+        left: 188.5px;
+        bottom: 188.5px;
+      }
+      &#n23 {
+        left: 288.5px;
+        bottom: 188.5px;
+      }
+      &#n24 {
+        right: 188.5px;
+        bottom: 188.5px;
+      }
+      &.purple {
+        background-color: purple;
+      }
+      &.green {
+        background-color: green;
+      }
     }
   }
-}
-
-.purple {
-  background-color: purple;
-}
-.green {
-  background-color: green;
 }
