@@ -31,6 +31,8 @@ let millCreated = false;
 let purplePlayer = 0;
 let greenPlayer = 0;
 let movingCounter = false;
+let counterInHand = null;
+let nodeFrom = null;
 
 //functions go here
 
@@ -226,7 +228,7 @@ function applyCounter(e) {
   }
 }
 
-//this function will remove a counter if that counter is not in a mill
+//this function will remove a counter if that counter is not in a mill and increase the score of the player removing a counter
 function removeCounter(e) {
   if(!checkMill(e)) {
     if($(e.target).hasClass('purple')) {
@@ -245,24 +247,201 @@ function removeCounter(e) {
   }
 }
 
+//function to pick up counter and track where it was picked up from
+function pickUpCounter(e) {
+  if($(e.target).hasClass('purple')) {
+    $(e.target).removeClass('purple');
+    nodeFrom = $(e.target)[0];
+    counterInHand = 'purple';
+    movingCounter = true;
+  } else if($(e.target).hasClass('green')) {
+    $(e.target).removeClass('green');
+    nodeFrom = $(e.target)[0];
+    counterInHand = 'green';
+    movingCounter = true;
+  }
+}
+
+//function to place counter only if in a valid square when being moved
+function placeCounter(e) {
+  if(fairMove(e)) {
+    $(e.target).addClass(counterInHand);
+    counterInHand = null;
+    movingCounter = null;
+    nodeFrom = null;
+  } else {
+    console.log('This is not a valid move!');
+  }
+}
+
+function fairMove(e) {
+  if(nodeFrom === $node1[0]) {
+    if($(e.target)[0] === $node2[0] || $(e.target)[0] === $node4[0]) {
+      return true;
+    } else {
+      return false;
+    }
+  } else if(nodeFrom === $node2[0]) {
+    if($(e.target)[0] === $node1[0] || $(e.target)[0] === $node10[0] || $(e.target)[0] === $node3[0]) {
+      return true;
+    } else {
+      return false;
+    }
+  } else if(nodeFrom === $node3[0]) {
+    if($(e.target)[0] === $node2[0] || $(e.target)[0] === $node5[0]) {
+      return true;
+    } else {
+      return false;
+    }
+  } else if(nodeFrom === $node4[0]) {
+    if($(e.target)[0] === $node1[0] || $(e.target)[0] === $node12[0] || $(e.target)[0] === $node6[0]) {
+      return true;
+    } else {
+      return false;
+    }
+  } else if(nodeFrom === $node5[0]) {
+    if($(e.target)[0] === $node3[0] || $(e.target)[0] === $node8[0] || $(e.target)[0] === $node13[0]) {
+      return true;
+    } else {
+      return false;
+    }
+  } else if(nodeFrom === $node6[0]) {
+    if($(e.target)[0] === $node4[0] || $(e.target)[0] === $node7[0]) {
+      return true;
+    } else {
+      return false;
+    }
+  } else if(nodeFrom === $node7[0]) {
+    if($(e.target)[0] === $node15[0] || $(e.target)[0] === $node8[0] || $(e.target)[0] === $node6[0]) {
+      return true;
+    } else {
+      return false;
+    }
+  } else if(nodeFrom === $node8[0]) {
+    if($(e.target)[0] === $node5[0] || $(e.target)[0] === $node7[0]) {
+      return true;
+    } else {
+      return false;
+    }
+  } else if(nodeFrom === $node9[0]) {
+    if($(e.target)[0] === $node10[0] || $(e.target)[0] === $node12[0]) {
+      return true;
+    } else {
+      return false;
+    }
+  } else if(nodeFrom === $node10[0]) {
+    if($(e.target)[0] === $node2[0] || $(e.target)[0] === $node11[0] || $(e.target)[0] === $node18[0] || $(e.target)[0] === $node9[0]) {
+      return true;
+    } else {
+      return false;
+    }
+  } else if(nodeFrom === $node11[0]) {
+    if($(e.target)[0] === $node13[0] || $(e.target)[0] === $node10[0]) {
+      return true;
+    } else {
+      return false;
+    }
+  } else if(nodeFrom === $node12[0]) {
+    if($(e.target)[0] === $node9[0] || $(e.target)[0] === $node20[0] || $(e.target)[0] === $node14[0] || $(e.target)[0] === $node4[0]) {
+      return true;
+    } else {
+      return false;
+    }
+  } else if(nodeFrom === $node13[0]) {
+    if($(e.target)[0] === $node11[0] || $(e.target)[0] === $node5[0] || $(e.target)[0] === $node16[0] || $(e.target)[0] === $node21[0]) {
+      return true;
+    } else {
+      return false;
+    }
+  } else if(nodeFrom === $node14[0]) {
+    if($(e.target)[0] === $node12[0] || $(e.target)[0] === $node15[0]) {
+      return true;
+    } else {
+      return false;
+    }
+  } else if(nodeFrom === $node15[0]) {
+    if($(e.target)[0] === $node23[0] || $(e.target)[0] === $node16[0] || $(e.target)[0] === $node7[0] || $(e.target)[0] === $node14[0]) {
+      return true;
+    } else {
+      return false;
+    }
+  } else if(nodeFrom === $node16[0]) {
+    if($(e.target)[0] === $node13[0] || $(e.target)[0] === $node15[0]) {
+      return true;
+    } else {
+      return false;
+    }
+  } else if(nodeFrom === $node17[0]) {
+    if($(e.target)[0] === $node18[0] || $(e.target)[0] === $node20[0]) {
+      return true;
+    } else {
+      return false;
+    }
+  } else if(nodeFrom === $node18[0]) {
+    if($(e.target)[0] === $node10[0] || $(e.target)[0] === $node19[0] || $(e.target)[0] === $node17[0]) {
+      return true;
+    } else {
+      return false;
+    }
+  } else if(nodeFrom === $node19[0]) {
+    if($(e.target)[0] === $node21[0] || $(e.target)[0] === $node18[0]) {
+      return true;
+    } else {
+      return false;
+    }
+  } else if(nodeFrom === $node20[0]) {
+    if($(e.target)[0] === $node17[0] || $(e.target)[0] === $node22[0] || $(e.target)[0] === $node12[0]) {
+      return true;
+    } else {
+      return false;
+    }
+  } else if(nodeFrom === $node21[0]) {
+    if($(e.target)[0] === $node19[0] || $(e.target)[0] === $node13[0] || $(e.target)[0] === $node24[0]) {
+      return true;
+    } else {
+      return false;
+    }
+  } else if(nodeFrom === $node22[0]) {
+    if($(e.target)[0] === $node20[0] || $(e.target)[0] === $node23[0]) {
+      return true;
+    } else {
+      return false;
+    }
+  } else if(nodeFrom === $node23[0]) {
+    if($(e.target)[0] === $node24[0] || $(e.target)[0] === $node15[0] || $(e.target)[0] === $node22[0]) {
+      return true;
+    } else {
+      return false;
+    }
+  } else if(nodeFrom === $node24[0]) {
+    if($(e.target)[0] === $node23[0] || $(e.target)[0] === $node21[0]) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
+
 //this function determines whether to:
 // 1. Remove a counter if a node is created
-// 2. Add a counter to the board if the turn is less than 18
+// 2. Add a counter to the board if the turn is less than or equal to 18
 // 3. allow a player to move a counter if the turn is greater than 18
 function nodeClicked(e) {
   if(millCreated) {
     removeCounter(e);
-  } else if(turnCounter < 18) {
+  } else if(turnCounter <= 18) {
     applyCounter(e);
     millCreated = checkMill(e);
     if(millCreated) {
       console.log('mill created');
     }
   } else if(!movingCounter) {
-    //picking a counter up logic goees here
+    pickUpCounter(e);
   } else {
-    //placing a moving counter logic goes here
+    placeCounter(e);
+    millCreated = checkMill(e);
   }
 }
+
 //event listerners go here
 $nodes.on('click', nodeClicked);
