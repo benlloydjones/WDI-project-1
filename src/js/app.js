@@ -1,5 +1,5 @@
 //variables go here
-const $gameBoard = $('.gameBoard');
+const $body = $('body');
 const $nodes = $('.node');
 const $node1 = $('#n1');
 const $node2 = $('#n2');
@@ -28,7 +28,9 @@ const $node24 = $('#n24');
 const $turnDisplay = $('.turnNumber');
 const $playerDisplay = $('.currentPlayer');
 const $button = $('button');
-const $winner = $('winner');
+const $winner = $('.winner');
+const $greenScore = $('.greenScore');
+const $purpleScore = $('.purpleScore');
 
 let turnCounter = 1;
 let millCreated = false;
@@ -114,7 +116,8 @@ function checkMill(e) {
       return true;
     }
   }
-  if([$node11[0], $node13[0], $node16[0]].includes($(e.taret)[0])) {
+  if([$node11[0], $node13[0], $node16[0]].includes($(e.target)[0])) {
+    console.log('clicked');
     if([$node11, $node13, $node16].every((node) => node.attr('class') === $(e.target).attr('class'))) {
       return true;
     }
@@ -165,28 +168,40 @@ function removeCounter(e) {
 
 //function to pick up counter
 function pickUpCounter(e) {
-  if($(e.target).hasClass('purple')) {
-    $(e.target).removeClass('purple');
-    counterInHand = 'purple';
-  } else if($(e.target).hasClass('green')) {
+  if(turnCounter % 2 !== 0 && $(e.target).hasClass('green')) {
     $(e.target).removeClass('green');
     counterInHand = 'green';
+    movingCounter = true;
+    nodeFrom = $(e.target)[0];
+  } else if(turnCounter % 2 === 0 && $(e.target).hasClass('purple')) {
+    $(e.target).removeClass('purple');
+    counterInHand = 'purple';
+    movingCounter = true;
+    nodeFrom = $(e.target)[0];
+  } else if(!$(e.target).hasClass('green') && !$(e.target).hasClass('purple')) {
+    console.log('This is an empty node');
+  } else {
+    console.log('this node has the wrong colour counter');
   }
-  trackCounter(e);
 }
 
-//tracks where a counter was picked up from
-function trackCounter(e) {
-  nodeFrom = $(e.target)[0];
-  movingCounter = true;
-}
+// if($(e.target).hasClass('purple')) {
+//   $(e.target).removeClass('purple');
+//   counterInHand = 'purple';
+//   movingCounter = true;
+// } else if($(e.target).hasClass('green')) {
+//   $(e.target).removeClass('green');
+//   counterInHand = 'green';
+//   movingCounter = true;
+// }
+// trackCounter(e);
 
 //function to place counter only if in a valid square when being moved
 function placeCounter(e) {
   if(fairMove(e)) {
     $(e.target).addClass(counterInHand);
     counterInHand = null;
-    movingCounter = null;
+    movingCounter = false;
     nodeFrom = null;
   } else {
     console.log('This is not a valid move!');
@@ -246,6 +261,21 @@ function fairMove(e) {
   }
 }
 
+function newTurn() {
+  turnCounter++;
+  if(turnCounter % 2 === 0) {
+    $playerDisplay.text('Purple');
+    $body.removeClass('green');
+    $body.addClass('purple');
+    $turnDisplay.text(turnCounter);
+  } else {
+    $playerDisplay.text('Green');
+    $body.removeClass('purple');
+    $body.addClass('green');
+    $turnDisplay.text(turnCounter);
+  }
+}
+
 //this function determines whether to:
 // 1. Remove a counter if a node is created
 // 2. Add a counter to the board if the turn is less than or equal to 18
@@ -254,23 +284,13 @@ function nodeClicked(e) {
   if(millCreated) {
     removeCounter(e);
     if(!millCreated) {
-      turnCounter++;
-    }
-    if(turnCounter % 2 === 0) {
-      $playerDisplay.text('Purple');
-    } else {
-      $playerDisplay.text('Green');
+      newTurn();
     }
   } else if(turnCounter <= 18) {
     applyCounter(e);
     millCreated = checkMill(e);
     if(!millCreated) {
-      turnCounter++;
-      if(turnCounter % 2 === 0) {
-        $playerDisplay.text('Purple');
-      } else {
-        $playerDisplay.text('Green');
-      }
+      newTurn();
     } else {
       console.log('mill created');
     }
@@ -280,21 +300,14 @@ function nodeClicked(e) {
     placeCounter(e);
     millCreated = checkMill(e);
     if(!millCreated) {
-      turnCounter++;
-      if(turnCounter % 2 === 0) {
-        $playerDisplay.text('Purple');
-      } else {
-        $playerDisplay.text('Green');
-      }
+      newTurn();
     }
   }
-  if(purplePlayer === 9) {
+  if(purplePlayer === 7) {
     $winner.text('Purple wins!');
-  } else if(greenPlayer === 9) {
+  } else if(greenPlayer === 7) {
     $winner.text('Green wins!');
   }
-  $turnDisplay.text(turnCounter);
-
 }
 
 //reset the game to start state
@@ -310,6 +323,9 @@ function reset() {
   $nodes.removeClass('purple');
   $playerDisplay.text('Green');
   $turnDisplay.text(turnCounter);
+  $greenScore.text(greenPlayer);
+  $purpleScore.text(purplePlayer);
+  $winner.text('');
 }
 
 //event listerners go here
