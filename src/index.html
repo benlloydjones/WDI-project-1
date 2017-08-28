@@ -8,44 +8,56 @@
   </head>
   <body class="green">
     <div class="Turn">
-      <p>Current player is: <span class="currentPlayer">Green</span></p>
-      <p>Current turn is: <span class="turnNumber">1</span></p>
-      <p>Purple score is: <span class="purpleScore">0</span></p>
-      <p >Green score is: <span class="greenScore">0</span></p>
+      <p>Current player: <span class="currentPlayer">Green</span></p>
+      <p>Current action: <span class="currentAction">Choose a node to place a counter</span></p>
+      <p>Current turn: <span class="turnNumber">1</span></p>
+      <p>Purple score: <span class="purpleScore">0</span></p>
+      <p >Green score: <span class="greenScore">0</span></p>
       <p class="winner"></p>
     </div>
     <div class="gameBoard">
-      <div class="box1"></div>
-      <div class="box2"></div>
-      <div class="box3"></div>
-      <div class="topVert"></div>
-      <div class="bottomVert"></div>
-      <div class="leftHoriz"></div>
-      <div class="rightHoriz"></div>
-      <div class="node" id="n1"></div>
-      <div class="node" id="n2"></div>
-      <div class="node" id="n3"></div>
-      <div class="node" id="n4"></div>
-      <div class="node" id="n5"></div>
-      <div class="node" id="n6"></div>
-      <div class="node" id="n7"></div>
-      <div class="node" id="n8"></div>
-      <div class="node" id="n9"></div>
-      <div class="node" id="n10"></div>
-      <div class="node" id="n11"></div>
-      <div class="node" id="n12"></div>
-      <div class="node" id="n13"></div>
-      <div class="node" id="n14"></div>
-      <div class="node" id="n15"></div>
-      <div class="node" id="n16"></div>
-      <div class="node" id="n17"></div>
-      <div class="node" id="n18"></div>
-      <div class="node" id="n19"></div>
-      <div class="node" id="n20"></div>
-      <div class="node" id="n21"></div>
-      <div class="node" id="n22"></div>
-      <div class="node" id="n23"></div>
-      <div class="node" id="n24"></div>
+      <div class="flexContainer flexBox1">
+        <div class="node" id="n1">1</div>
+        <div class="node" id="n2">2</div>
+        <div class="node" id="n3">3</div>
+      </div>
+      <div class="flexContainer flexBox2">
+        <div class="node" id="n9">9</div>
+        <div class="node" id="n10">10</div>
+        <div class="node" id="n11">11</div>
+      </div>
+      <div class="flexContainer flexBox3">
+        <div class="node" id="n17">17</div>
+        <div class="node" id="n18">18</div>
+        <div class="node" id="n19">19</div>
+      </div>
+      <div class="flexContainer flexBox4">
+        <div class="flexContainer flexBox8">
+            <div class="node" id="n4">4</div>
+            <div class="node" id="n12">12</div>
+            <div class="node" id="n20">20</div>
+        </div>
+        <div class="flexContainer flexBox9">
+            <div class="node" id="n21">21</div>
+            <div class="node" id="n13">13</div>
+            <div class="node" id="n5">5</div>
+        </div>
+      </div>
+      <div class="flexContainer flexBox5">
+        <div class="node" id="n22">22</div>
+        <div class="node" id="n23">23</div>
+        <div class="node" id="n24">24</div>
+      </div>
+      <div class="flexContainer flexBox6">
+        <div class="node" id="n14">14</div>
+        <div class="node" id="n15">15</div>
+        <div class="node" id="n16">16</div>
+      </div>
+      <div class="flexContainer flexBox7">
+        <div class="node" id="n6">6</div>
+        <div class="node" id="n7">7</div>
+        <div class="node" id="n8">8</div>
+      </div>
     </div>
     <button type="button" name="button">Reset</button>
 

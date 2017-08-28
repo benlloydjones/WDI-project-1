@@ -1,9 +1,9 @@
 * {
   box-sizing: border-box;
+  // outline: 1px solid blue;
 }
 body {
   color: white;
-  display: flex;
   &.purple {
     background-color: purple;
   }
@@ -11,171 +11,76 @@ body {
     background-color: green;
   }
   .gameBoard {
-    background-color: bisque;
-    border: 1px solid brown;
+    padding: 0 5.0853%;
+    color: black;
+    background-color: grey;
+    display: flex;
+    flex-direction: column;
     height: 600px;
     width: 600px;
-    margin: 50px auto;
-    position: relative;
-    .box1 {
-      border: 4px solid black;
-      position: absolute;
-      top: 11px;
-      left: 11px;
-      height: 573px;
-      width: 573px;
-    }
-    .box2 {
-      border: 4px solid black;
-      position: absolute;
-      top: 100px;
-      left: 100px;
-      height: 395px;
-      width: 395px;
-    }
-    .box3 {
-      border: 4px solid black;
-      position: absolute;
-      top: 200px;
-      left: 200px;
-      height: 196px;
-      width: 196px;
-    }
-    .topVert {
-      border: 2px solid black;
-      position: absolute;
-      top: 11px;
-      left: 300px;
-      height: 195px;
-      width: 4px;
-    }
-    .bottomVert {
-      border: 2px solid black;
-      position: absolute;
-      bottom: 11px;
-      left: 300px;
-      height: 195px;
-      width: 4px;
-    }
-    .leftHoriz {
-      border: 2px solid black;
-      position: absolute;
-      top: 300px;
-      left: 11px;
-      height: 4px;
-      width: 195px;
-    }
-    .rightHoriz {
-      border: 2px solid black;
-      position: absolute;
-      top: 300px;
-      right: 11px;
-      height: 4px;
-      width: 195px;
-    }
-    .node{
-      background-color: white;
-      border: 1px solid black;
-      border-radius: 100%;
-      height: 25px;
-      width: 25px;
-      margin: 2.5px;
-      position: absolute;
-      &#n1 {
+    .flexContainer {
+      display: flex;
+      width: 100%;
+      flex-direction: row;
+      justify-content: space-between;
+      height: 14.2857%;
+      align-items: center;
+      &.flexBox2 {
+        #n9 {
+          margin-left: 16.66%;
+        }
+        #n11 {
+          margin-right: 16.66%;
+        }
       }
-      &#n2 {
-        left: 287.5px;
+      &.flexBox3 {
+        #n17 {
+          margin-left: 33.33%;
+        }
+        #n19 {
+          margin-right: 33.33%;
+        }
       }
-      &#n3 {
-        right: 2.5px;
+      &.flexBox5 {
+        #n22 {
+          margin-left: 33.33%;
+        }
+        #n24 {
+          margin-right: 33.33%;
+        }
       }
-      &#n4 {
-        top: 287.5px;
+      &.flexBox6 {
+        #n14 {
+          margin-left: 16.66%;
+        }
+        #n16{
+          margin-right: 16.66%;
+        }
       }
-      &#n5 {
-        right: 2.5px;
-        top: 287.5px;
+      &.flexBox8 {
+        width: 50%;
+        #n20 {
+          margin-right: 25%;
+        }
       }
-      &#n6 {
-        bottom: 2.5px
+      &.flexBox9 {
+        width: 50%;
+        #n21 {
+          margin-left: 25%;
+        }
       }
-      &#n7 {
-        bottom: 2.5px;
-        left: 287.5px;
-      }
-      &#n8 {
-        bottom: 2.5px;
-        right: 2.5px;
-      }
-      &#n9 {
-        top: 88.5px;
-        left: 88.5px;
-      }
-      &#n10 {
-        top: 88.5px;
-        left: 287.5px;
-      }
-      &#n11 {
-        top: 88.5px;
-        right: 88.5px;
-      }
-      &#n12 {
-        top: 287.5px;
-        left: 88.5px;
-      }
-      &#n13 {
-        top: 287.5px;
-        right: 88.5px;
-      }
-      &#n14 {
-        left: 88.5px;
-        bottom: 88.5px;
-      }
-      &#n15 {
-        left: 287.5px;
-        bottom: 88.5px;
-      }
-      &#n16 {
-        right: 88.5px;
-        bottom: 88.5px;
-      }
-      &#n17 {
-        top: 188.5px;
-        left: 188.5px;
-      }
-      &#n18 {
-        top: 188.5px;
-        left: 288.5px;
-      }
-      &#n19 {
-        top: 188.5px;
-        right: 188.5px;
-      }
-      &#n20 {
-        top: 288.5px;
-        left: 188.5px;
-      }
-      &#n21 {
-        top: 288.5px;
-        right: 188.5px;
-      }
-      &#n22 {
-        left: 188.5px;
-        bottom: 188.5px;
-      }
-      &#n23 {
-        left: 288.5px;
-        bottom: 188.5px;
-      }
-      &#n24 {
-        right: 188.5px;
-        bottom: 188.5px;
-      }
-      &.purple {
-        background-color: purple;
-      }
-      &.green {
-        background-color: green;
+      .node{
+        background-color: white;
+        border: 1px solid black;
+        border-radius: 100%;
+        height: 25px;
+        width: 25px;
+        &.purple {
+          background-color: purple;
+        }
+        &.green {
+          background-color: green;
+        }
       }
     }
   }
