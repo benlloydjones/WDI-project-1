@@ -10,7 +10,32 @@ const $purpleScore = $('.purpleScore');
 const $currentAction = $('.currentAction');
 
 //node to $nodes position reference:
-// {1: 0, 2: 1, 3: 2, 4: 9, 5: 14, 6: 21, 7: 22, 8: 23, 9: 3, 10: 4, 11: 5, 12: 10, 13: 13, 14: 18, 15: 19, 16: 20, 17: 6, 18: 7, 19: 8, 20: 11, 21: 12, 22: 15, 23: 16, 24: 17}
+const idToArray = {
+  'n1': 0,
+  'n2': 1,
+  'n3': 2,
+  'n4': 9,
+  'n5': 14,
+  'n6': 21,
+  'n7': 22,
+  'n8': 23,
+  'n9': 3,
+  'n10': 4,
+  'n11': 5,
+  'n12': 10,
+  'n13': 13,
+  'n14': 18,
+  'n15': 19,
+  'n16': 20,
+  'n17': 6,
+  'n18': 7,
+  'n19': 8,
+  'n20': 11,
+  'n21': 12,
+  'n22': 15,
+  'n23': 16,
+  'n24': 17};
+
 //valid moves as orderd by the node to $node reference above
 const validMoves = {
   0: [$nodes[1], $nodes[9]],
@@ -101,7 +126,7 @@ function isInMill(nodeToTest) {
 //this function will place a counter on a node without a counter on it.
 function applyCounter(e) {
   if($(e.target).hasClass('purple') || $(e.target).hasClass('green')) {
-    console.log('already contains counter');
+    console.log('This node already contains a counter.');
   } else {
     if(turnCounter % 2 === 0) {
       $(e.target).addClass('purple');
@@ -147,7 +172,7 @@ function removeCounter(e) {
       newTurn();
     }
   } else if(isInMill($target)){
-    console.log('this is in a mill');
+    console.log('this is in a mill choose a counter not in a mill.');
   } else if(($target.hasClass('green') && turnCounter % 2 !== 0) || ($target.hasClass('purple') && turnCounter % 2 === 0)) {
     console.log('You need to choose a token from the other player');
   } else {
@@ -163,12 +188,12 @@ function pickUpCounter(e) {
       $(e.target).removeClass('green');
       counterInHand = 'green';
       movingCounter = true;
-
+      console.log('Choose an adjacent, empty, node to place your counter.');
     } else if(turnCounter % 2 === 0 && $(e.target).hasClass('purple')) {
       $(e.target).removeClass('purple');
       counterInHand = 'purple';
       movingCounter = true;
-      nodeFrom = $(e.target)[0];
+      console.log('Choose an adjacent, empty, node to place your counter.');
     } else if(!$(e.target).hasClass('green') && !$(e.target).hasClass('purple')) {
       console.log('This is an empty node');
     } else {
@@ -188,7 +213,7 @@ function placeCounter(e) {
     movingCounter = false;
     nodeFrom = null;
   } else {
-    console.log('This is not a valid move!');
+    console.log('This is not a valid move! You need to choose an adjacent, empty, node.');
   }
 }
 
@@ -292,3 +317,72 @@ function reset() {
 //event listerners go here
 $nodes.on('click', nodeClicked);
 $button.on('click', reset);
+
+//Computer brain goes below
+
+function findEmptyIndices() {
+  const emptyNodeIndices = [];
+  $nodes.toArray().map((node) => $(node)).forEach(($node, index) => {
+    if(!$node.hasClass('purple') && !$node.hasClass('green')) {
+      emptyNodeIndices.push(index);
+    }
+  });
+  return emptyNodeIndices;
+}
+
+function computerCompleteMill() {
+  const emptyNodeIndices = findEmptyIndices();
+  let computerMove = null;
+  emptyNodeIndices.forEach((nodeIndex) => {
+    mills.values().forEach((mill) => {
+      if(mill.includes($nodes[nodeIndex])) {
+        if(mill.map((node) => $(node)).some(($node) => $node.hasClass('purple')) && mill.map((node) => $(node)).every(($node) => !$node.hasClass('green'))) {
+          let counters = 0;
+          mill.map((node) => $(node)).forEach(($node) => {
+            if($node.hasClass('purple')) {
+              counters ++;
+            }
+          });
+          if(counters === 2) {
+            computerMove = nodeIndex;
+          }
+        }
+      }
+    });
+  });
+  return computerMove;
+}
+
+
+// //should return key value from valid moves as index
+// function returnJunctions(size) {
+//   junction = {}
+//   Object.values(validMoves).forEach((moveSet) => {
+//     if(moveSet.length === size) {
+//       junction.push(moveset)
+//     }
+//   })
+// }
+
+
+function computerPlaceOnXJunction(size) {
+  const junctions = aFunctionToFindTheJunctionList(size);
+  let computerMove = null;
+  junctions.map((node) => $(node)).forEach(($node) => {
+    if(!$node.hasClass('purple') && !$node.hasClass('green')) {
+      computerMove = idToArray[$node.attr('id')];
+    }
+  });
+  return computerMove;
+}
+
+function computerPlaceOnThreeJunction() {
+  const fourWayJunctions = [$nodes[10], $nodes[12], $nodes[13], $nodes[15]];
+  let computerMove = null;
+  fourWayJunctions.map((node) => $(node)).forEach(($node) => {
+    if(!$node.hasClass('purple') && !$node.hasClass('green')) {
+      computerMove = idToArray[$node.attr('id')];
+    }
+  });
+  return computerMove;
+}
