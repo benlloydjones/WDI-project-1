@@ -68,6 +68,7 @@ let greenPlayer = 0;
 let movingCounter = false;
 let counterInHand = null;
 let nodeFrom = null;
+let placementSuccessful = false;
 
 //functions go here
 
@@ -104,8 +105,10 @@ function applyCounter(e) {
   } else {
     if(turnCounter % 2 === 0) {
       $(e.target).addClass('purple');
+      placementSuccessful = true;
     } else {
       $(e.target).addClass('green');
+      placementSuccessful = true;
     }
   }
 }
@@ -232,13 +235,16 @@ function nodeClicked(e) {
       $currentAction.text('Choose a counter to move');
     }
   } else if(turnCounter <= 18) {
+    placementSuccessful = false;
     applyCounter(e);
     millCreated = isInMill($target);
     if(!millCreated) {
       if(turnCounter === 18) {
         $currentAction.text('Choose a counter to move');
       }
-      newTurn();
+      if(placementSuccessful) {
+        newTurn();
+      }
     } else if (millCreated) {
       $currentAction.text('You have created a mill. Choose one of your opponent\'s counters to remove');
     }
