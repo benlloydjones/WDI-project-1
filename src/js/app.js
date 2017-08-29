@@ -1,4 +1,7 @@
+//*****************
 //variables go here
+//*****************
+
 const $body = $('body');
 const $nodes = $('.node');
 const $turnDisplay = $('.turnNumber');
@@ -95,7 +98,9 @@ let counterInHand = null;
 let nodeFrom = null;
 let placementSuccessful = false;
 
+//*****************
 //functions go here
+//*****************
 
 //if all nodes of a certain class are in a mill this will return true
 function canRemoveMill(colour) {
@@ -313,13 +318,18 @@ function reset() {
   $purpleScore.text(purplePlayer);
   $winner.text('');
 }
-
+//************************
 //event listerners go here
+//************************
+
 $nodes.on('click', nodeClicked);
 $button.on('click', reset);
 
+//*************************
 //Computer brain goes below
+//*************************
 
+//returns all the empty nodes on the board
 function findEmptyIndices() {
   const emptyNodeIndices = [];
   $nodes.toArray().map((node) => $(node)).forEach(($node, index) => {
@@ -330,11 +340,12 @@ function findEmptyIndices() {
   return emptyNodeIndices;
 }
 
+//returns a $nodes index for a computer move to complete one of the computers mills or null if there is not one to be completed
 function computerCompleteMill() {
   const emptyNodeIndices = findEmptyIndices();
   let computerMove = null;
   emptyNodeIndices.forEach((nodeIndex) => {
-    mills.values().forEach((mill) => {
+    Object.values(mills).forEach((mill) => {
       if(mill.includes($nodes[nodeIndex])) {
         if(mill.map((node) => $(node)).some(($node) => $node.hasClass('purple')) && mill.map((node) => $(node)).every(($node) => !$node.hasClass('green'))) {
           let counters = 0;
@@ -353,33 +364,22 @@ function computerCompleteMill() {
   return computerMove;
 }
 
-
-// //should return key value from valid moves as index
-// function returnJunctions(size) {
-//   junction = {}
-//   Object.values(validMoves).forEach((moveSet) => {
-//     if(moveSet.length === size) {
-//       junction.push(moveset)
-//     }
-//   })
-// }
-
-
-function computerPlaceOnXJunction(size) {
-  const junctions = aFunctionToFindTheJunctionList(size);
-  let computerMove = null;
-  junctions.map((node) => $(node)).forEach(($node) => {
-    if(!$node.hasClass('purple') && !$node.hasClass('green')) {
-      computerMove = idToArray[$node.attr('id')];
+//returns list of junctions of a given size
+function returnJunctions(size) {
+  const junction = [];
+  Object.entries(validMoves).forEach((moveSet) => {
+    if(moveSet[1].length === size) {
+      junction.push(moveSet[0]);
     }
   });
-  return computerMove;
+  return junction.map((junctionIndex) => $nodes[junctionIndex]);
 }
 
-function computerPlaceOnThreeJunction() {
-  const fourWayJunctions = [$nodes[10], $nodes[12], $nodes[13], $nodes[15]];
+//returns a $nodes index for a computer move to place a counter on a junction of a given size or null if there is not one free
+function computerPlaceOnJunction(size) {
+  const junctions = returnJunctions(size);
   let computerMove = null;
-  fourWayJunctions.map((node) => $(node)).forEach(($node) => {
+  junctions.map((node) => $(node)).forEach(($node) => {
     if(!$node.hasClass('purple') && !$node.hasClass('green')) {
       computerMove = idToArray[$node.attr('id')];
     }
