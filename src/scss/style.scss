@@ -18,6 +18,26 @@ body {
     flex-direction: column;
     height: 600px;
     width: 600px;
+    // .box{
+    //   display: block;
+    //   border: 4px solid black;
+    //   &.one {
+    //     width: 95%;
+    //     height: 95%;
+    //   }
+    //   &.two {
+    //     widht: 60%
+    //   }
+    //   &.three {
+    //
+    //   }
+    // }
+    // .horizontal {
+    //   display: block;
+    // }
+    // .vertical {
+    //   display: block;
+    // }
     .flexContainer {
       display: flex;
       width: 100%;
