@@ -222,7 +222,6 @@ function pickUpCounter(e) {
   } else {
     console.log('That counter can\'t move');
   }
-
 }
 
 //function to place counter only if in a valid square when being moved
@@ -241,80 +240,45 @@ function placeCounter(e) {
 //checks when moving a token if it's a legitimate move
 function fairMove(nodeToCheck) {
   const full = nodeToCheck.hasClass('green') || nodeToCheck.hasClass('purple');
-  if(nodeFrom === $node1[0]) {
-    const locationGood = [$node2[0], $node4[0]].some((node) => node === nodeToCheck[0]);
-    return locationGood && !full;
-  } else if(nodeFrom === $node2[0]) {
-    const locationGood = [$node1[0], $node10[0] ,$node3[0]].some((node) => node === nodeToCheck[0]);
-    return locationGood && !full;
-  } else if(nodeFrom === $node3[0]) {
-    const locationGood = [$node2[0], $node5[0]].some((node) => node === nodeToCheck[0]);
-    return locationGood && !full;
-  } else if(nodeFrom === $node4[0]) {
-    const locationGood = [$node1[0], $node12[0], $node6[0]].some((node) => node === nodeToCheck[0]);
-    return locationGood && !full;
-  } else if(nodeFrom === $node5[0]) {
-    const locationGood = [$node3[0], $node8[0], $node13[0]].some((node) => node === nodeToCheck[0]);
-    return locationGood && !full;
-  } else if(nodeFrom === $node6[0]) {
-    const locationGood = [$node4[0], $node7[0]].some((node) => node === nodeToCheck[0]);
-    return locationGood && !full;
-  } else if(nodeFrom === $node7[0]) {
-    const locationGood = [$node15[0], $node8[0], $node6[0]].some((node) => node === nodeToCheck[0]);
-    return locationGood && !full;
-  } else if(nodeFrom === $node8[0]) {
-    const locationGood = [$node5[0], $node7[0]].some((node) => node === nodeToCheck[0]);
-    return locationGood && !full;
-  } else if(nodeFrom === $node9[0]) {
-    const locationGood = [$node10[0], $node12[0]].some((node) => node === nodeToCheck[0]);
-    return locationGood && !full;
-  } else if(nodeFrom === $node10[0]) {
-    const locationGood = [$node2[0], $node11[0], $node18[0], $node9[0]].some((node) => node === nodeToCheck[0]);
-    return locationGood && !full;
-  } else if(nodeFrom === $node11[0]) {
-    const locationGood = [$node13[0], $node10[0]].some((node) => node === nodeToCheck[0]);
-    return locationGood && !full;
-  } else if(nodeFrom === $node12[0]) {
-    const locationGood = [$node9[0], $node20[0], $node14[0], $node4[0]].some((node) => node === nodeToCheck[0]);
-    return locationGood && !full;
-  } else if(nodeFrom === $node13[0]) {
-    const locationGood = [$node11[0], $node5[0], $node16[0], $node21[0]].some((node) => node === nodeToCheck[0]);
-    return locationGood && !full;
-  } else if(nodeFrom === $node14[0]) {
-    const locationGood = [$node12[0], $node15[0]].some((node) => node === nodeToCheck[0]);
-    return locationGood && !full;
-  } else if(nodeFrom === $node15[0]) {
-    const locationGood = [$node23[0], $node16[0], $node7[0], $node14[0]].some((node) => node === nodeToCheck[0]);
-    return locationGood && !full;
-  } else if(nodeFrom === $node16[0]) {
-    const locationGood = [$node13[0], $node15[0]].some((node) => node === nodeToCheck[0]);
-    return locationGood && !full;
-  } else if(nodeFrom === $node17[0]) {
-    const locationGood = [$node18[0], $node20[0]].some((node) => node === nodeToCheck[0]);
-    return locationGood && !full;
-  } else if(nodeFrom === $node18[0]) {
-    const locationGood = [$node10[0], $node19[0], $node17[0]].some((node) => node === nodeToCheck[0]);
-    return locationGood && !full;
-  } else if(nodeFrom === $node19[0]) {
-    const locationGood = [$node21[0], $node18[0]].some((node) => node === nodeToCheck[0]);
-    return locationGood && !full;
-  } else if(nodeFrom === $node20[0]) {
-    const locationGood = [$node17[0], $node22[0], $node12[0]].some((node) => node === nodeToCheck[0]);
-    return locationGood && !full;
-  } else if(nodeFrom === $node21[0]) {
-    const locationGood = [$node19[0], $node13[0], $node24[0]].some((node) => node === nodeToCheck[0]);
-    return locationGood && !full;
-  } else if(nodeFrom === $node22[0]) {
-    const locationGood = [$node20[0], $node23[0]].some((node) => node === nodeToCheck[0]);
-    return locationGood && !full;
-  } else if(nodeFrom === $node23[0]) {
-    const locationGood = [$node24[0], $node15[0], $node22[0]].some((node) => node === nodeToCheck[0]);
-    return locationGood && !full;
-  } else if(nodeFrom === $node24[0]) {
-    const locationGood = [$node23[0], $node21[0]].some((node) => node === nodeToCheck[0]);
-    return locationGood && !full;
-  }
+  let valid = false;
+  $nodes.toArray().forEach((a, b) => {
+    if(nodeFrom === a) {
+      valid = validMoves[b].some((node) => node === nodeToCheck[0]);
+      console.log(valid, 'move found');
+    }
+  });
+  return valid && !full;
 }
+
+//node to $nodes position reference:
+// {1: 0, 2: 1, 3: 2, 4: 9, 5: 14, 6: 21, 7: 22, 8: 23, 9: 3, 10: 4, 11: 5, 12: 10, 13: 13, 14: 18, 15: 19, 16: 20, 17: 6, 18: 7, 19: 8, 20: 11, 21: 12, 22: 15, 23: 16, 24: 17}
+
+const validMoves = {
+  0: [$nodes[1], $nodes[9]],
+  1: [$nodes[0], $nodes[2], $nodes[4]],
+  2: [$nodes[1], $nodes[14]],
+  9: [$nodes[0], $nodes[10], $nodes[21]],
+  14: [$nodes[2], $nodes[23], $nodes[13]],
+  21: [$nodes[9], $nodes[22]],
+  22: [$nodes[19], $nodes[23], $nodes[21]],
+  23: [$nodes[14], $nodes[22]],
+  3: [$nodes[4], $nodes[10]],
+  4: [$nodes[1], $nodes[5], $nodes[7], $nodes[3]],
+  5: [$nodes[4], $nodes[13]],
+  10: [$nodes[3], $nodes[11], $nodes[18], $nodes[9]],
+  13: [$nodes[5], $nodes[14], $nodes[20], $nodes[12]],
+  18: [$nodes[10], $nodes[19]],
+  19: [$nodes[16], $nodes[20], $nodes[22], $nodes[18]],
+  20: [$nodes[13], $nodes[19]],
+  6: [$nodes[7], $nodes[11]],
+  7: [$nodes[4], $nodes[8], $nodes[6]],
+  8: [$nodes[7], $nodes[12]],
+  11: [$nodes[6], $nodes[15], $nodes[10]],
+  12: [$nodes[8], $nodes[13], $nodes[17]],
+  15: [$nodes[11], $nodes[16]],
+  16: [$nodes[17], $nodes[19], $nodes[15]],
+  17: [$nodes[12], $nodes[16]]
+};
 
 //Creates next turn
 function newTurn() {
