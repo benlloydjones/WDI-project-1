@@ -1,30 +1,6 @@
 //variables go here
 const $body = $('body');
 const $nodes = $('.node');
-const $node1 = $('#n1');
-const $node2 = $('#n2');
-const $node3 = $('#n3');
-const $node4 = $('#n4');
-const $node5 = $('#n5');
-const $node6 = $('#n6');
-const $node7 = $('#n7');
-const $node8 = $('#n8');
-const $node9 = $('#n9');
-const $node10 = $('#n10');
-const $node11 = $('#n11');
-const $node12 = $('#n12');
-const $node13 = $('#n13');
-const $node14 = $('#n14');
-const $node15 = $('#n15');
-const $node16 = $('#n16');
-const $node17 = $('#n17');
-const $node18 = $('#n18');
-const $node19 = $('#n19');
-const $node20 = $('#n20');
-const $node21 = $('#n21');
-const $node22 = $('#n22');
-const $node23 = $('#n23');
-const $node24 = $('#n24');
 const $turnDisplay = $('.turnNumber');
 const $playerDisplay = $('.currentPlayer');
 const $button = $('button');
@@ -32,7 +8,6 @@ const $winner = $('.winner');
 const $greenScore = $('.greenScore');
 const $purpleScore = $('.purpleScore');
 const $currentAction = $('.currentAction');
-const nodes = [$node1, $node2, $node3, $node4, $node5, $node6, $node7, $node8, $node9, $node10, $node11, $node12, $node13, $node14, $node15, $node16, $node17, $node18, $node19, $node20, $node21, $node22, $node23, $node24];
 
 //node to $nodes position reference:
 // {1: 0, 2: 1, 3: 2, 4: 9, 5: 14, 6: 21, 7: 22, 8: 23, 9: 3, 10: 4, 11: 5, 12: 10, 13: 13, 14: 18, 15: 19, 16: 20, 17: 6, 18: 7, 19: 8, 20: 11, 21: 12, 22: 15, 23: 16, 24: 17}
@@ -86,7 +61,6 @@ const mills = {
   15: [$nodes[2], $nodes[14], $nodes[23]]
 };
 
-
 let turnCounter = 1;
 let millCreated = false;
 let purplePlayer = 0;
@@ -100,7 +74,7 @@ let nodeFrom = null;
 //if all nodes of a certain class are in a mill this will return true
 function canRemoveMill(colour) {
   const nodesToCheck = [];
-  nodes.forEach((node) => {
+  $nodes.toArray().map((node) => $(node)).forEach((node) => {
     if(node.hasClass(colour)) {
       nodesToCheck.push(node);
     }
@@ -130,10 +104,8 @@ function applyCounter(e) {
   } else {
     if(turnCounter % 2 === 0) {
       $(e.target).addClass('purple');
-      console.log('purple click', `, turn: ${turnCounter}`);
     } else {
       $(e.target).addClass('green');
-      console.log('green click', `, turn: ${turnCounter}`);
     }
   }
 }
@@ -183,7 +155,7 @@ function removeCounter(e) {
 //function to pick up counter
 function pickUpCounter(e) {
   nodeFrom = $(e.target)[0];
-  if(nodes.some(fairMove)) {
+  if($nodes.toArray().map((node) => $(node)).some(fairMove)) {
     if(turnCounter % 2 !== 0 && $(e.target).hasClass('green')) {
       $(e.target).removeClass('green');
       counterInHand = 'green';
@@ -221,9 +193,9 @@ function placeCounter(e) {
 function fairMove(nodeToCheck) {
   const full = nodeToCheck.hasClass('green') || nodeToCheck.hasClass('purple');
   let valid = false;
-  $nodes.toArray().forEach((a, b) => {
-    if(nodeFrom === a) {
-      valid = validMoves[b].some((node) => node === nodeToCheck[0]);
+  $nodes.toArray().forEach((node, indexOfNode) => {
+    if(nodeFrom === node) {
+      valid = validMoves[indexOfNode].some((node) => node === nodeToCheck[0]);
     }
   });
   return valid && !full;
