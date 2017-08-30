@@ -6,7 +6,8 @@ const $body = $('body');
 const $nodes = $('.node');
 const $turnDisplay = $('.turnNumber');
 const $playerDisplay = $('.currentPlayer');
-const $button = $('button');
+const $reset = $('.reset');
+const $players = $('.players');
 const $winner = $('.winner');
 const $greenScore = $('.greenScore');
 const $purpleScore = $('.purpleScore');
@@ -97,6 +98,7 @@ let movingCounter = false;
 let counterInHand = null;
 let nodeFrom = null;
 let placementSuccessful = false;
+let computerPlaying = false;
 
 //*****************
 //functions go here
@@ -251,11 +253,8 @@ function newTurn() {
   $purpleScore.text(purplePlayer);
 }
 
-//this function determines whether to:
-// 1. Remove a counter if a node is created
-// 2. Add a counter to the board if the turn is less than or equal to 18
-// 3. allow a player to move a counter if the turn is greater than 18
-function nodeClicked(e) {
+
+function twoPlayer(e) {
   const $target = $(e.target);
   if(millCreated) {
     removeCounter(e);
@@ -299,6 +298,51 @@ function nodeClicked(e) {
   }
 }
 
+function onePlayer(e) {
+  const $target = $(e.target);
+  if(millCreated && turnCounter % 2 !== 0) {
+    removeCounter(e);
+    if(turnCounter < 18) {
+      $currentAction.text('Choose a node to place a counter');
+    } else {
+      $currentAction.text('Choose a counter to move');
+    }
+    if(turnCounter <= 18) {
+      window.setTimeout(computerPlaceCounter, 500);
+    }
+  } else if(turnCounter <= 18 && turnCounter !== 2) {
+    placementSuccessful = false;
+    applyCounter(e);
+    millCreated = isInMill($target);
+    if(!millCreated) {
+      if(turnCounter === 18) {
+        $currentAction.text('Choose a counter to move');
+      }
+      if(placementSuccessful) {
+        newTurn();
+        if(turnCounter <= 18) {
+          window.setTimeout(computerPlaceCounter, 250);
+        }
+      }
+    } else if (millCreated) {
+      $currentAction.text('You have created a mill. Choose one of your opponent\'s counters to remove');
+    }
+  }
+}
+
+
+//this function determines whether to:
+// 1. Remove a counter if a node is created
+// 2. Add a counter to the board if the turn is less than or equal to 18
+// 3. allow a player to move a counter if the turn is greater than 18
+function nodeClicked(e) {
+  if(computerPlaying){
+    onePlayer(e);
+  } else {
+    twoPlayer(e);
+  }
+}
+
 //reset the game to start state
 function reset() {
   turnCounter = 1;
@@ -318,12 +362,24 @@ function reset() {
   $purpleScore.text(purplePlayer);
   $winner.text('');
 }
+
+function changePlayers() {
+  if(computerPlaying) {
+    computerPlaying =false;
+    $players.text('2 player');
+  } else {
+    computerPlaying = true;
+    $players.text('1 player');
+  }
+}
+
 //************************
 //event listerners go here
 //************************
 
 $nodes.on('click', nodeClicked);
-$button.on('click', reset);
+$reset.on('click', reset);
+$players.on('click', changePlayers);
 
 //*************************
 //Computer brain goes below
@@ -338,6 +394,17 @@ function findEmptyIndices() {
     }
   });
   return emptyNodeIndices;
+}
+
+//returns $nodes indices all nodes with opponent's counters
+function findOpponentCounters() {
+  const takenNodeIndices = [];
+  $nodes.toArray().map((node) => $(node)).forEach(($node, index) => {
+    if($node.hasClass('green')) {
+      takenNodeIndices.push(index);
+    }
+  });
+  return takenNodeIndices;
 }
 
 //returns a $nodes index for a computer move to complete one of the computers mills or null if there is not one to be completed
@@ -385,4 +452,145 @@ function computerPlaceOnJunction(size) {
     }
   });
   return computerMove;
+}
+
+//returns a $nodes index for a computer move to remove a counter on a junction not in a mill of a given size or null if there is no counter to remove or if all junctions are in mill
+function computerRemoveFromJunctionNotInMill(size) {
+  const junctions = returnJunctions(size);
+  let computerMove = null;
+  junctions.forEach((junctionNode) => {
+    Object.values(mills).forEach((mill) => {
+      if(mill.includes(junctionNode)) {
+        if(mill.map((node) => $(node)).every(($node) => !$node.hasClass('green')) && !$(junctionNode).hasClass('purple')) {
+          computerMove = idToArray[$(junctionNode).attr('id')];
+        }
+      }
+    });
+  });
+  return computerMove;
+}
+
+//returns a $nodes index for the computer to remove a counter from a potential mill
+function computerRemoveFromPotentialMill() {
+  const takenNodeIndices = findOpponentCounters();
+  let computerMove = null;
+  takenNodeIndices.forEach((nodeIndex) => {
+    Object.values(mills).forEach((mill) => {
+      if(mill.includes($nodes[nodeIndex])) {
+        if(mill.map((node) => $(node)).some(($node) => $node.hasClass('green')) && mill.map((node) => $(node)).every(($node) => !$node.hasClass('purple'))) {
+          let counter = 0;
+          mill.map((node) => $(node)).forEach(($node) => {
+            if($node.hasClass('green')) {
+              counter ++;
+            }
+          });
+          if(counter === 2) {
+            computerMove = nodeIndex;
+          }
+        }
+      }
+    });
+  });
+  return computerMove;
+}
+
+//returns a $nodes index value to remove a counter from a junction of a given size in a mill
+function computerRemoveFromJunctionInMill(size) {
+  const junctions = returnJunctions(size);
+  let computerMove = null;
+  junctions.map((junctionNode) => $(junctionNode)).forEach(($junctionNode) => {
+    if($junctionNode.hasClass('green')) {
+      computerMove = idToArray[$junctionNode.attr('id')];
+    }
+  });
+  return computerMove;
+}
+
+//returns a $nodes index value to place a counter to block a potential mill
+function computerBlockMills() {
+  const opponentCountersIndices = findOpponentCounters();
+  let computerMove = null;
+  opponentCountersIndices.map((index) => $nodes[index]).forEach((node) => {
+    Object.values(mills).forEach((mill) => {
+      if(mill.includes(node)) {
+        if(mill.map((millNode) => $(millNode)).some(($millNode) => $millNode.hasClass('green'))) {
+          if(mill.map((millNode) => $(millNode)).every(($millNode) => !$millNode.hasClass('purple'))) {
+            let counter = 0;
+            mill.map((millNode) => $(millNode)).forEach(($millNode) =>{
+              if($millNode.hasClass('green')) {
+                counter ++;
+              }
+            });
+            if(counter === 2) {
+              mill.map((millNode) => $(millNode)).forEach(($millNode) => {
+                if(!$millNode.hasClass('green')) {
+                  computerMove = idToArray[$millNode.attr('id')];
+                }
+              });
+            }
+          }
+        }
+      }
+    });
+  });
+  return computerMove;
+}
+
+function computerChooseCounterToRemove() {
+  if(canRemoveMill('green')) {
+    if(computerRemoveFromJunctionInMill(4)) {
+      console.log('computer remove mill 4');
+      $($nodes[computerRemoveFromJunctionInMill(4)]).removeClass('green');
+      newTurn();
+    } else {
+      console.log('computer remove mill 3');
+      $($nodes[computerRemoveFromJunctionInMill(3)]).removeClass('green');
+      newTurn();
+    }
+  } else {
+    if(computerRemoveFromPotentialMill()) {
+      console.log('remove from potential mill');
+      $($nodes[computerRemoveFromPotentialMill()]).removeClass('green');
+      newTurn();
+    } else if(computerRemoveFromJunctionNotInMill(4)) {
+      console.log('remove junction 4');
+      $($nodes[computerRemoveFromJunctionNotInMill(4)]).removeClass('green');
+      newTurn();
+    } else if(computerRemoveFromJunctionNotInMill(3)) {
+      console.log('remove junction 3');
+      $($nodes[computerRemoveFromJunctionNotInMill(3)]).removeClass('green');
+      newTurn();
+    } else {
+      console.log('remove junction 2');
+      $($nodes[computerRemoveFromJunctionNotInMill(2)]).removeClass('green');
+      newTurn();
+    }
+  }
+}
+
+function computerPlaceCounter() {
+  console.log('placing counter');
+  if(computerCompleteMill()) {
+    console.log('trying to complete mill');
+    $($nodes[computerCompleteMill()]).addClass('purple');
+    computerChooseCounterToRemove();
+    purplePlayer ++;
+    newTurn();
+  } else if(computerBlockMills()) {
+    console.log('trying to block mill');
+    $($nodes[computerBlockMills()]).addClass('purple');
+    newTurn();
+  } else if(computerPlaceOnJunction(4)) {
+    console.log('junction4');
+    $($nodes[computerPlaceOnJunction(4)]).addClass('purple');
+    newTurn();
+  } else if(computerPlaceOnJunction(3)) {
+    console.log('junction3');
+    $($nodes[computerPlaceOnJunction(3)]).addClass('purple');
+    newTurn();
+  } else {
+    console.log('junction2');
+    $($nodes[computerPlaceOnJunction(2)]).addClass('purple');
+    newTurn();
+  }
 }

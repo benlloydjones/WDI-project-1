@@ -10,96 +10,129 @@ body {
   &.green {
     background-color: green;
   }
-  .gameBoard {
-    padding: 0 5.0853%;
-    color: black;
-    background-color: grey;
-    display: flex;
-    flex-direction: column;
+  .gameContainer {
+    margin: 0 auto;
+    background-color: bisque;
+    position: relative;
+    width: 725px;
     height: 600px;
-    width: 600px;
-    // .box{
-    //   display: block;
-    //   border: 4px solid black;
-    //   &.one {
-    //     width: 95%;
-    //     height: 95%;
-    //   }
-    //   &.two {
-    //     widht: 60%
-    //   }
-    //   &.three {
-    //
-    //   }
-    // }
-    // .horizontal {
-    //   display: block;
-    // }
-    // .vertical {
-    //   display: block;
-    // }
-    .flexContainer {
+    border: 1px solid black;
+    .box{
+      position: absolute;
+      display: block;
+      border: 4px solid black;
+      &.horizontal {
+        border: 2px solid black;
+        width: 30%;
+        top: 50%;
+        &.hone {
+          left: 9%;
+        }
+        &.htwo {
+          right: 9%;
+        }
+      }
+      &.vertical {
+        border: 2px solid black;
+        height: 29%;
+        left: 50%;
+        &.vone {
+          top: 7%;
+        }
+        &.vtwo {
+          bottom: 7%;
+        }
+      }
+      &.one {
+        top: 6.5%;
+        left: 8.5%;
+        width: 83%;
+        height: 87%;
+      }
+      &.two {
+        top: 21%;
+        left: 24%;
+        width: 52.5%;
+        height: 58%;
+      }
+      &.three {
+        top: 35.5%;
+        left: 39%;
+        width: 22.5%;
+        height: 29.2%;
+      }
+    }
+    .gameBoard {
+      padding: 0 5.0853%;
+      color: black;
       display: flex;
+      flex-direction: column;
+      height: 100%;
       width: 100%;
-      flex-direction: row;
-      justify-content: space-between;
-      height: 14.2857%;
-      align-items: center;
-      &.flexBox2 {
-        #n9 {
-          margin-left: 16.66%;
+      .flexContainer {
+        display: flex;
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        height: 14.2857%;
+        align-items: center;
+        &.flexBox2 {
+          #n9 {
+            margin-left: 16.66%;
+          }
+          #n11 {
+            margin-right: 16.66%;
+          }
         }
-        #n11 {
-          margin-right: 16.66%;
+        &.flexBox3 {
+          #n17 {
+            margin-left: 33.33%;
+          }
+          #n19 {
+            margin-right: 33.33%;
+          }
         }
-      }
-      &.flexBox3 {
-        #n17 {
-          margin-left: 33.33%;
+        &.flexBox5 {
+          #n22 {
+            margin-left: 33.33%;
+          }
+          #n24 {
+            margin-right: 33.33%;
+          }
         }
-        #n19 {
-          margin-right: 33.33%;
+        &.flexBox6 {
+          #n14 {
+            margin-left: 16.66%;
+          }
+          #n16{
+            margin-right: 16.66%;
+          }
         }
-      }
-      &.flexBox5 {
-        #n22 {
-          margin-left: 33.33%;
+        &.flexBox8 {
+          width: 50%;
+          #n20 {
+            margin-right: 19%;
+          }
         }
-        #n24 {
-          margin-right: 33.33%;
+        &.flexBox9 {
+          width: 50%;
+          #n21 {
+            margin-left: 19%;
+          }
         }
-      }
-      &.flexBox6 {
-        #n14 {
-          margin-left: 16.66%;
-        }
-        #n16{
-          margin-right: 16.66%;
-        }
-      }
-      &.flexBox8 {
-        width: 50%;
-        #n20 {
-          margin-right: 15%;
-        }
-      }
-      &.flexBox9 {
-        width: 50%;
-        #n21 {
-          margin-left: 15%;
-        }
-      }
-      .node{
-        background-color: white;
-        border: 1px solid black;
-        border-radius: 100%;
-        height: 50px;
-        width: 50px;
-        &.purple {
-          background-color: purple;
-        }
-        &.green {
-          background-color: green;
+        .node{
+          background-color: white;
+          border: 1px solid black;
+          border-radius: 100%;
+          height: 50px;
+          width: 50px;
+          z-index: 1;
+          &.purple {
+            background-color: purple;
+          }
+          &.green {
+            background-color: green;
+          }
         }
       }
     }
