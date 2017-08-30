@@ -308,9 +308,11 @@ function onePlayer(e) {
       $currentAction.text('Choose a counter to move');
     }
     if(turnCounter <= 18) {
-      window.setTimeout(computerPlaceCounter, 500);
+      setTimeout(computerPlaceCounter(), 250);
+    } else {
+      setTimeout(computerMoveCounter(), 250);
     }
-  } else if(turnCounter <= 18 && turnCounter !== 2) {
+  } else if(turnCounter <= 18 && turnCounter % 2 !== 0) {
     placementSuccessful = false;
     applyCounter(e);
     millCreated = isInMill($target);
@@ -321,11 +323,25 @@ function onePlayer(e) {
       if(placementSuccessful) {
         newTurn();
         if(turnCounter <= 18) {
-          window.setTimeout(computerPlaceCounter, 250);
+          setTimeout(computerPlaceCounter(), 250);
         }
       }
     } else if (millCreated) {
       $currentAction.text('You have created a mill. Choose one of your opponent\'s counters to remove');
+    }
+  } else if(!movingCounter && turnCounter % 2 !== 0) {
+    pickUpCounter(e);
+  } else if(counterInHand) {
+    placeCounter(e);
+    if(!counterInHand) {
+      millCreated = isInMill($target);
+      if(!millCreated) {
+        $currentAction.text('Choose a counter to move');
+        newTurn();
+        setTimeout(computerMoveCounter(), 250);
+      } else {
+        $currentAction.text('You have created a mill. Choose one of your opponent\'s counters to remove');
+      }
     }
   }
 }
@@ -363,6 +379,7 @@ function reset() {
   $winner.text('');
 }
 
+//switch between one player and two
 function changePlayers() {
   if(computerPlaying) {
     computerPlaying =false;
@@ -458,11 +475,11 @@ function computerPlaceOnJunction(size) {
 function computerRemoveFromJunctionNotInMill(size) {
   const junctions = returnJunctions(size);
   let computerMove = null;
-  junctions.forEach((junctionNode) => {
+  junctions.map((junction) => $(junction)).filter(($junction) => $junction.hasClass('green')).forEach(($greenJunction) => {
     Object.values(mills).forEach((mill) => {
-      if(mill.includes(junctionNode)) {
-        if(mill.map((node) => $(node)).every(($node) => !$node.hasClass('green')) && !$(junctionNode).hasClass('purple')) {
-          computerMove = idToArray[$(junctionNode).attr('id')];
+      if(mill.includes($greenJunction[0])) {
+        if(!mill.map((millNode) => $(millNode)).every(($millNode) => $millNode.hasClass('green'))) {
+          computerMove = idToArray[$greenJunction.attr('id')];
         }
       }
     });
@@ -477,7 +494,7 @@ function computerRemoveFromPotentialMill() {
   takenNodeIndices.forEach((nodeIndex) => {
     Object.values(mills).forEach((mill) => {
       if(mill.includes($nodes[nodeIndex])) {
-        if(mill.map((node) => $(node)).some(($node) => $node.hasClass('green')) && mill.map((node) => $(node)).every(($node) => !$node.hasClass('purple'))) {
+        if(mill.map((node) => $(node)).some(($node) => $node.hasClass('green')) && !mill.map((node) => $(node)).every(($node) => $node.hasClass('purple'))) {
           let counter = 0;
           mill.map((node) => $(node)).forEach(($node) => {
             if($node.hasClass('green')) {
@@ -536,46 +553,42 @@ function computerBlockMills() {
   return computerMove;
 }
 
+//Priorities for how the computer removes counters
 function computerChooseCounterToRemove() {
   if(canRemoveMill('green')) {
     if(computerRemoveFromJunctionInMill(4)) {
       console.log('computer remove mill 4');
       $($nodes[computerRemoveFromJunctionInMill(4)]).removeClass('green');
-      newTurn();
     } else {
       console.log('computer remove mill 3');
       $($nodes[computerRemoveFromJunctionInMill(3)]).removeClass('green');
-      newTurn();
     }
   } else {
     if(computerRemoveFromPotentialMill()) {
       console.log('remove from potential mill');
       $($nodes[computerRemoveFromPotentialMill()]).removeClass('green');
-      newTurn();
     } else if(computerRemoveFromJunctionNotInMill(4)) {
       console.log('remove junction 4');
       $($nodes[computerRemoveFromJunctionNotInMill(4)]).removeClass('green');
-      newTurn();
     } else if(computerRemoveFromJunctionNotInMill(3)) {
       console.log('remove junction 3');
       $($nodes[computerRemoveFromJunctionNotInMill(3)]).removeClass('green');
-      newTurn();
     } else {
       console.log('remove junction 2');
       $($nodes[computerRemoveFromJunctionNotInMill(2)]).removeClass('green');
-      newTurn();
     }
   }
+  purplePlayer ++;
+  newTurn();
 }
 
+//priorites for how the computer places counters
 function computerPlaceCounter() {
   console.log('placing counter');
   if(computerCompleteMill()) {
     console.log('trying to complete mill');
     $($nodes[computerCompleteMill()]).addClass('purple');
-    computerChooseCounterToRemove();
-    purplePlayer ++;
-    newTurn();
+    setTimeout(computerChooseCounterToRemove(), 250);
   } else if(computerBlockMills()) {
     console.log('trying to block mill');
     $($nodes[computerBlockMills()]).addClass('purple');
@@ -593,4 +606,72 @@ function computerPlaceCounter() {
     $($nodes[computerPlaceOnJunction(2)]).addClass('purple');
     newTurn();
   }
+}
+
+//allows the computer to move a its counter, this follows alogic based on the ordering of the valid moves object and the $nodes jQuery object, it makes me sad
+function computerMoveCounter() {
+  console.log('Moving counter');
+  if(randomMove()) {
+    console.log('random move');
+    const move = randomMove();
+    $($nodes[move[0]]).removeClass('purple');
+    setTimeout($($nodes[move[1]]).addClass('purple'), 250);
+    if(isInMill($($nodes[move[1]]))) {
+      setTimeout(computerChooseCounterToRemove(), 250);
+    } else {
+      newTurn();
+    }
+  } else {
+    console.log('There is no move');
+  }
+}
+
+//finds all nodes that are purple
+function findPurpleNodes() {
+  const listOfPurple = [];
+  $nodes.toArray().map((node) => $(node)).forEach(($node) => {
+    if($node.hasClass('purple')) {
+      listOfPurple.push($node);
+    }
+  });
+  return listOfPurple;
+}
+
+//makes the computer find the last counter with a valid move and then makes that counter take its last valid move.
+function randomMove() {
+  const $counters = findPurpleNodes();
+  let moveFrom = null;
+  let moveTo = null;
+  $counters.forEach(($counter) => {
+    validMoves[idToArray[$counter.attr('id')]].map((move) => $(move)).forEach(($move) => {
+      if(!$move.hasClass('purple') && !$move.hasClass('green')) {
+        moveFrom = idToArray[$counter.attr('id')];
+        moveTo = idToArray[$move.attr('id')];
+      }
+    });
+  });
+  return [moveFrom, moveTo];
+}
+
+function findMillsWithTwoPurpleCounters() {
+  const arrayOfMills = Object.values(mills);
+  let constituentMill = null;
+  let possibleStartLocation = null;
+  arrayOfMills.forEach((mill) => {
+    let counter = 0;
+    mill.map((millNode) => $(millNode)).forEach(($millNode) => {
+      if($millNode.hasClass('purple')) {
+        counter ++;
+      }
+    });
+    if(counter === 2) {
+      mill.map((millNode) => $(millNode)).forEach(($millNode) => {
+        constituentMill = mill;
+        if(!$millNode.hasClass('purple') && !$millNode.hasClass('green')) {
+          possibleStartLocation = $millNode;
+        }
+      });
+    }
+  });
+  return [possibleStartLocation, constituentMill];
 }
