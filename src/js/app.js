@@ -2,7 +2,7 @@
 //variables go here
 //*****************
 
-const $body = $('body');
+const $body = $('.current');
 const $nodes = $('.node');
 const $turnDisplay = $('.turnNumber');
 const $playerDisplay = $('.currentPlayer');
@@ -150,7 +150,7 @@ function removeCounter(e) {
   const $target = $(e.target);
   if(turnCounter % 2 !== 0 && canRemoveMill('purple')) {
     if(!$target.hasClass('purple')) {
-      console.log('You need to choose a purple node');
+      console.log('You need to choose a red node');
     } else {
       $target.removeClass('purple');
       greenPlayer++;
@@ -159,7 +159,7 @@ function removeCounter(e) {
     }
   } else if (turnCounter % 2 === 0 && canRemoveMill('green')) {
     if(!$target.hasClass('green')) {
-      console.log('You need to choose a green node');
+      console.log('You need to choose a blue node');
     } else {
       $target.removeClass('green');
       purplePlayer++;
@@ -240,11 +240,11 @@ function fairMove(nodeToCheck) {
 function newTurn() {
   turnCounter++;
   if(turnCounter % 2 === 0) {
-    $playerDisplay.text('Purple');
+    $playerDisplay.text('Red');
     $body.removeClass('green');
     $body.addClass('purple');
   } else {
-    $playerDisplay.text('Green');
+    $playerDisplay.text('Blue');
     $body.removeClass('purple');
     $body.addClass('green');
   }
@@ -292,9 +292,9 @@ function twoPlayer(e) {
     }
   }
   if(purplePlayer === 7) {
-    $winner.text('Purple wins!');
+    $winner.text('Red wins!');
   } else if(greenPlayer === 7) {
-    $winner.text('Green wins!');
+    $winner.text('Blue wins!');
   }
 }
 
@@ -372,7 +372,7 @@ function reset() {
   $body.addClass('green');
   $nodes.removeClass('green');
   $nodes.removeClass('purple');
-  $playerDisplay.text('Green');
+  $playerDisplay.text('Blue');
   $turnDisplay.text(turnCounter);
   $greenScore.text(greenPlayer);
   $purpleScore.text(purplePlayer);
