@@ -41,6 +41,7 @@ body {
     max-width: 75%;
     margin: 0 auto;
     .turn {
+      min-height: 560px;
       display: flex;
       flex-direction: column;
       justify-content: space-around;
@@ -290,7 +291,7 @@ body {
         font-size: medium;
         color: darkslategrey;
         &.players {
-          visibility: hidden;
+          // visibility: hidden;
         }
       }
     }
@@ -306,6 +307,9 @@ body {
       .turn {
         margin-right: 0;
         flex-direction: row;
+        flex-wrap: wrap;
+        font-size: 12px;
+        min-height: 185px;
         width: 95%;
         margin-bottom: 2%;
       }
