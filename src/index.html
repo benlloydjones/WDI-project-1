@@ -2,17 +2,37 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>WDI Project 1</title>
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans|Varela+Round" rel="stylesheet">
     <!-- inject:css -->
     <!-- endinject -->
   </head>
   <body>
+    <header>
+      <h1>Bacchus</h1>
+    </header>
     <main>
-      <div class="turn">
-        <p class="current green">Current player:<br><span class="currentPlayer">Blue</span></p>
-        <p class="current green">Current action:<br><span class="currentAction">Choose a node to place a counter</span></p>
+      <div class="explanation">
+        <h1>Welcome to Bacchus</h1>
+        <p>The aim of the game is to capture seven of your opponent's counters. You can capture one of your opponent's pieces by having three of your counters in a horizontal or vertical line (as indicated by the lines on the board), this is known as a mill.</p>
+        <p>The game has two phases:</p>
+          <ol>
+            <li>In this phase you place your counters, in turn, on the board, you have nine counters to place.</li>
+            <li>In this phase you move your counters to an adjacent point (as indicated by the lines on the board).</li>
+          </ol>
+        <p>You can break and a mill by moving your counter out of it and then in your next turn reform the mill, allowing you to take another of your opponent's counters</p>
+        <p>When capturing your opponent's counters, you can only remove counters that are not in a mill, unless, all of your opponent's counters are in mills.</p>
+        <p>Directions over what your next action is can be seen to the left of the board.</p>
+        <div class="okay">
+          <button type="button" name="button" class="accept">Ok</button>
+        </div>
+      </div>
+      <div class="turn  green">
+        <p class="current">Current player:<br><span class="currentPlayer">Blue</span></p>
+        <p class="current">Current action:<br><span class="currentAction">Choose a node to place a counter</span></p>
         <p>Current turn:<br><span class="turnNumber">1</span></p>
-        <p>Purple score:<br><span class="purpleScore">0</span></p>
+        <p>Red score:<br><span class="purpleScore">0</span></p>
         <p>Blue score:<br><span class="greenScore">0</span></p>
 
         <p class="winner"></p>
@@ -73,6 +93,7 @@
       <div class="buttons">
         <button type="button" name="button" class="reset">Reset</button>
         <button type="button" name="button" class="players">2 player</button>
+        <button type="button" name="button" class="rules">Rules</button>
       </div>
 
     </main>

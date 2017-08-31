@@ -2,7 +2,7 @@
 //variables go here
 //*****************
 
-const $body = $('.current');
+const $body = $('.turn');
 const $nodes = $('.node');
 const $turnDisplay = $('.turnNumber');
 const $playerDisplay = $('.currentPlayer');
@@ -12,6 +12,8 @@ const $winner = $('.winner');
 const $greenScore = $('.greenScore');
 const $purpleScore = $('.purpleScore');
 const $currentAction = $('.currentAction');
+const $accept = $('.accept');
+const $rules = $('.rules');
 
 //node to $nodes position reference:
 const idToArray = {
@@ -397,6 +399,14 @@ function changePlayers() {
 $nodes.on('click', nodeClicked);
 $reset.on('click', reset);
 $players.on('click', changePlayers);
+$accept.on('click', () => {
+  $('.explanation').css('z-index', '-3');
+  $('.explanation').css('visibility', 'hidden');
+});
+$rules.on('click', () => {
+  $('.explanation').css('z-index', '3');
+  $('.explanation').css('visibility', 'visible');
+});
 
 //*************************
 //Computer brain goes below

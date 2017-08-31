@@ -2,38 +2,101 @@
   box-sizing: border-box;
   // outline: 1px solid blue;
 }
+p {
+  font-family: 'PT Sans', sans-serif;
+}
+header{
+  h1 {
+    text-align: center;
+    font-family: 'Varela Round', sans-serif;
+    color: darkslategrey;
+  }
+}
+
 body {
+  background-color: floralwhite;
   main {
     display: flex;
     max-width: 960px;
     margin: 0 auto;
     .turn {
-      color: darkslategray;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      color: white;
       max-width: 100px;
-      margin-right: 20px;
+      margin-right: 15px;
+      border-radius: 15px;
+      padding: 3px;
+      &.purple {
+        background-color: tomato;
+        border: 1px solid #ff7f68;
+      }
+      &.green {
+        background-color: cornflowerblue;
+        border: 1px solid #83aaf0;
+      }
       .current{
-        &.purple {
-          background-color: tomato;
-        }
-        &.green {
-          background-color: cornflowerblue;
+
+      }
+    }
+    .explanation {
+      position: fixed;
+      top: 15%;
+      left: 21%;
+      width: 600px;
+      padding: 10px;
+      z-index: 2;
+      color: darkslategrey;
+      background-color: cornsilk;
+      border-top:2px solid #e4c69f;
+      border-left:2px solid #e4c69f;
+      border-bottom:2px solid #b1936c;
+      border-right:2px solid #b1936c;
+      border-radius: 5px;
+      box-shadow: 10px 5px 5px #856e51;
+      h1 {
+        text-align: center;
+        font-family: 'Varela Round', sans-serif;
+      }
+      p {
+        font-family: 'PT Sans', sans-serif;
+      }
+      li {
+        font-family: 'PT Sans', sans-serif;
+      }
+      .okay {
+        text-align: center;
+        button {
+          outline: none;
+          width: 20%;
+          background-color: burlywood;
+          border-top: 2px solid #e4c69f;
+          border-left: 2px solid #e4c69f;
+          border-bottom: 2px solid #b1936c;
+          border-right: 2px solid #b1936c;
+          border-radius: 15px;
+          font-family: 'PT Sans', sans-serif;
+          font-size: medium;
         }
       }
+
     }
     .gameContainer {
       background-color: cornsilk;
+      box-shadow: 10px 5px 5px #ccc6b0;
       position: relative;
       width: 725px;
       height: 600px;
-      border: 1px solid black;
-      border-radius: 5%;
+      border: 2px solid bisque;
+      border-radius: 15px;
       .box{
         position: absolute;
         display: block;
-        border: 4px double black;
+        border: 4px double saddlebrown;
         &.horizontal {
           border-bottom: 0;
-          border-top:: 4px double black;
+          border-top:: 4px double saddlebrown;
           width: 30%;
           top: 49.7%;
           &.hone {
@@ -45,7 +108,7 @@ body {
         }
         &.vertical {
           border-left: 0;
-          border-right: 4px double black;
+          border-right: 4px double saddlebrown;
           height: 29%;
           left: 49.7%;
           &.vone {
@@ -75,8 +138,7 @@ body {
         }
       }
       .gameBoard {
-        padding: 0 5.0853%;
-        color: black;
+        padding: 0 5.2%;
         display: flex;
         flex-direction: column;
         height: 100%;
@@ -133,21 +195,27 @@ body {
             }
           }
           .node{
-            background-color: antiquewhite;
-            border: 5px solid black;
+            background-color: burlywood;
+            border: 4px double saddlebrown;
             border-radius: 100%;
             height: 50px;
             width: 50px;
             z-index: 1;
             &.purple {
               background-color: tomato;
-              border: 4px solid #ff7f68;
-              box-shadow: 10px 5px 5px #d0513a;
+              border-top: 4px solid #ff7f68;
+              border-left: 4px solid #ff7f68;
+              border-right: 4px solid #d0513a;
+              border-bottom: 4px solid #d0513a;
+              box-shadow: 10px 5px 5px #993b2a;
             }
             &.green {
               background-color: cornflowerblue;
-              border: 4px solid #83aaf0;
-              box-shadow: 10px 5px 5px #5077bd;
+              border-top: 4px solid #83aaf0;
+              border-left: 4px solid #83aaf0;
+              border-right: 4px solid #5077bd;
+              border-bottom: 4px solid #5077bd;
+              box-shadow: 10px 5px 5px #3c598e;
             }
           }
         }
@@ -157,9 +225,23 @@ body {
       display: flex;
       flex-direction: column;
       max-width: 100px;
-      margin-left: 20px;
+      margin-left: 15px;
+      justify-content: space-around;
       button {
-        flex: none;
+        outline: none;
+        height: 20%;
+        background-color: burlywood;
+        border-top: 2px solid #e4c69f;
+        border-left: 2px solid #e4c69f;
+        border-bottom: 2px solid #b1936c;
+        border-right: 2px solid #b1936c;
+        border-radius: 15px;
+        font-family: 'PT Sans', sans-serif;
+        font-size: medium;
+        color: darkslategrey;
+        &.players {
+          visibility: hidden;
+        }
       }
     }
   }
