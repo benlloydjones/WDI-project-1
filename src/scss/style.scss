@@ -1,3 +1,23 @@
+@mixin aspect-ratio($width, $height) {
+  position: relative;
+  &:before {
+    display: block;
+    content: "";
+    width: 100%;
+    padding-top: ($height / $width) * 100%;
+  }
+  > .gameContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+.gameContainer {
+  @include aspect-ratio(1, 1);
+}
 * {
   box-sizing: border-box;
   // outline: 1px solid blue;
@@ -17,6 +37,7 @@ body {
   background-color: floralwhite;
   main {
     display: flex;
+    justify-content: space-around;
     max-width: 960px;
     margin: 0 auto;
     .turn {
@@ -24,8 +45,8 @@ body {
       flex-direction: column;
       justify-content: space-around;
       color: white;
-      max-width: 100px;
-      margin-right: 15px;
+      width: 15%;
+      margin-right: 2%;
       border-radius: 15px;
       padding: 3px;
       &.purple {
@@ -41,12 +62,13 @@ body {
       }
     }
     .explanation {
-      position: fixed;
-      top: 15%;
-      left: 21%;
-      width: 600px;
-      padding: 10px;
-      z-index: 2;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      padding: 1%;
+      z-index: 3;
       color: darkslategrey;
       background-color: cornsilk;
       border-top:2px solid #e4c69f;
@@ -58,12 +80,15 @@ body {
       h1 {
         text-align: center;
         font-family: 'Varela Round', sans-serif;
+        font-size: 20px;
       }
       p {
         font-family: 'PT Sans', sans-serif;
+        font-size: 13px;
       }
       li {
         font-family: 'PT Sans', sans-serif;
+        font-size: 13px;
       }
       .okay {
         text-align: center;
@@ -83,11 +108,11 @@ body {
 
     }
     .gameContainer {
+      align-content: space-between;
       background-color: cornsilk;
       box-shadow: 10px 5px 5px #ccc6b0;
       position: relative;
-      width: 725px;
-      height: 600px;
+      width: 60%;
       border: 2px solid bisque;
       border-radius: 15px;
       .box{
@@ -138,6 +163,11 @@ body {
         }
       }
       .gameBoard {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
         padding: 0 5.2%;
         display: flex;
         flex-direction: column;
@@ -183,23 +213,43 @@ body {
             }
           }
           &.flexBox8 {
+            height: 100%;
             width: 50%;
             #n20 {
               margin-right: 18.4%;
             }
           }
           &.flexBox9 {
+            height: 100%;
             width: 50%;
             #n21 {
               margin-left: 18.4%;
             }
           }
+          #n21 {
+            width: 16%
+          }
+          #n13 {
+            width: 16%
+          }
+          #n5 {
+            width: 16%
+          }
+          #n20 {
+            width: 16%
+          }
+          #n12 {
+            width: 16%
+          }
+          #n4 {
+            width: 16%
+          }
           .node{
             background-color: burlywood;
             border: 4px double saddlebrown;
             border-radius: 100%;
-            height: 50px;
-            width: 50px;
+            height: 60%;
+            width: 8%;
             z-index: 1;
             &.purple {
               background-color: tomato;
@@ -224,9 +274,9 @@ body {
     .buttons {
       display: flex;
       flex-direction: column;
-      max-width: 100px;
-      margin-left: 15px;
+      width: 15%;
       justify-content: space-around;
+      margin-left: 2%;
       button {
         outline: none;
         height: 20%;
@@ -242,6 +292,36 @@ body {
         &.players {
           visibility: hidden;
         }
+      }
+    }
+  }
+}
+
+@media (max-width: 740px) {
+  body {
+    main {
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      .turn {
+        margin-right: 0;
+        flex-direction: row;
+        width: 95%;
+        margin-bottom: 2%;
+      }
+      .gameContainer {
+        width: 95%;
+        .explanation {
+          overflow: scroll;
+        }
+        .gameBoard {
+
+        }
+      }
+      .buttons {
+        margin-top: 2%;
+        flex-direction: row;
+        width: 95%;
       }
     }
   }

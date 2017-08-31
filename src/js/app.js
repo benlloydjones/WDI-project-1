@@ -12,7 +12,7 @@ const $winner = $('.winner');
 const $greenScore = $('.greenScore');
 const $purpleScore = $('.purpleScore');
 const $currentAction = $('.currentAction');
-const $accept = $('.accept');
+const $accept = $('.explanation');
 const $rules = $('.rules');
 
 //node to $nodes position reference:
