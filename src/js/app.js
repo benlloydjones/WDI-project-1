@@ -295,8 +295,13 @@ function twoPlayer(e) {
   }
   if(purplePlayer === 7) {
     $winner.text('Red wins!');
+    $body.removeClass('green');
+    $body.addClass('purple');
   } else if(greenPlayer === 7) {
     $winner.text('Blue wins!');
+    $body.removeClass('purple');
+    $body.addClass('green');
+
   }
 }
 
