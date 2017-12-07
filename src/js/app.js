@@ -315,9 +315,9 @@ function onePlayer(e) {
       $currentAction.text('Choose a counter to move');
     }
     if(turnCounter <= 18) {
-      setTimeout(computerPlaceCounter(), 250);
+      setTimeout(computerPlaceCounter, 250);
     } else {
-      setTimeout(computerMoveCounter(), 250);
+      setTimeout(computerMoveCounter, 250);
     }
   } else if(turnCounter <= 18 && turnCounter % 2 !== 0) {
     placementSuccessful = false;
@@ -330,7 +330,7 @@ function onePlayer(e) {
       if(placementSuccessful) {
         newTurn();
         if(turnCounter <= 18) {
-          setTimeout(computerPlaceCounter(), 250);
+          setTimeout(computerPlaceCounter, 250);
         }
       }
     } else if (millCreated) {
@@ -345,7 +345,7 @@ function onePlayer(e) {
       if(!millCreated) {
         $currentAction.text('Choose a counter to move');
         newTurn();
-        setTimeout(computerMoveCounter(), 250);
+        setTimeout(computerMoveCounter, 250);
       } else {
         $currentAction.text('You have created a mill. Choose one of your opponent\'s counters to remove');
       }
@@ -603,7 +603,7 @@ function computerPlaceCounter() {
   if(computerCompleteMill()) {
     console.log('trying to complete mill');
     $($nodes[computerCompleteMill()]).addClass('purple');
-    setTimeout(computerChooseCounterToRemove(), 250);
+    setTimeout(computerChooseCounterToRemove, 250);
   } else if(computerBlockMills()) {
     console.log('trying to block mill');
     $($nodes[computerBlockMills()]).addClass('purple');
@@ -623,7 +623,7 @@ function computerPlaceCounter() {
   }
 }
 
-//allows the computer to move a its counter, this follows alogic based on the ordering of the valid moves object and the $nodes jQuery object, it makes me sad
+//allows the computer to move a its counter, this follows a logic based on the ordering of the valid moves object and the $nodes jQuery object, it makes me sad
 function computerMoveCounter() {
   console.log('Moving counter');
   if(randomMove()) {
@@ -666,27 +666,4 @@ function randomMove() {
     });
   });
   return [moveFrom, moveTo];
-}
-
-function findMillsWithTwoPurpleCounters() {
-  const arrayOfMills = Object.values(mills);
-  let constituentMill = null;
-  let possibleStartLocation = null;
-  arrayOfMills.forEach((mill) => {
-    let counter = 0;
-    mill.map((millNode) => $(millNode)).forEach(($millNode) => {
-      if($millNode.hasClass('purple')) {
-        counter ++;
-      }
-    });
-    if(counter === 2) {
-      mill.map((millNode) => $(millNode)).forEach(($millNode) => {
-        constituentMill = mill;
-        if(!$millNode.hasClass('purple') && !$millNode.hasClass('green')) {
-          possibleStartLocation = $millNode;
-        }
-      });
-    }
-  });
-  return [possibleStartLocation, constituentMill];
 }
