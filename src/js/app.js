@@ -632,7 +632,7 @@ function computerMoveCounter() {
     $($nodes[move[0]]).removeClass('purple');
     setTimeout($($nodes[move[1]]).addClass('purple'), 250);
     if(isInMill($($nodes[move[1]]))) {
-      setTimeout(computerChooseCounterToRemove(), 250);
+      setTimeout(computerChooseCounterToRemove, 250);
     } else {
       newTurn();
     }
@@ -667,3 +667,9 @@ function randomMove() {
   });
   return [moveFrom, moveTo];
 }
+
+//make the computer move smartly.
+//first, can it make a mill?
+//if it can it must move a counter, not from that mill on to the empty node
+//order of preference for movement would be from an existing mill first then in reverse order from smallest number of junctions to highest
+//if it can't make a mill then move from 2 junction to 4 else from 2 junction to 3 else from 3 junction to 4
